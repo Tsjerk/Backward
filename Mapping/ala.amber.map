@@ -1,0 +1,30 @@
+[ molecule ]
+ALA
+
+[ martini ]
+BB
+
+[ mapping ]
+amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    HA    BB
+    5    CB    BB
+    6   HB1    BB
+    7   HB2    BB
+    8   HB3    BB
+    9     C    BB
+   10     O    BB
+
+[ chiral ]
+  CB     CA    N    C
+  HB1    CA    N    C
+  HB2    CA    N    C
+  HB3    CA    N    C
+
+[ chiral ]
+  HA     CA    N    CB    C ; L-Ala
+; HA     CA    N    C    CB ; D-Ala

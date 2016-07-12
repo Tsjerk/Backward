@@ -1,0 +1,33 @@
+[ molecule ]
+HIS
+
+[ martini ]
+BB SC1 SC2 SC3
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    CB   SC1 BB
+    5    CG   SC1        
+    6   ND1   SC3 SC1
+    7   HD1   SC3 SC1
+    8   CD2   SC2 SC1
+    9   HD2   SC2 SC1
+   10   CE1   SC3 SC3 SC2
+   11   HE1   SC3 
+   12   NE2   SC2 
+   13   HE2   SC2
+   14     C    BB
+   15     O    BB
+
+[ chiral ]
+  CB     CA    N    C
+
+[ out ]
+HD1 ND1 CG NE2
+HD2 CD2 CE1 CG
+HE2 NE2 CE1 CD2

@@ -1,0 +1,187 @@
+;Created by TAW on 2014.08.13
+
+[ molecule ]
+DGPC DOPC.5 DALPC 
+
+;
+; NC3-PO4-GL1-x1A-x2A-x3A-x4A-x5A
+;         |
+;         GL2-x1B-x2B-x3B-x4B-x5B
+
+
+[ martini ]
+NC3 PO4 GL1 GL2 C1A C2A C3A C4A C5A C1B C2B C3B C4B C5B
+
+
+[ mapping ]
+; NOTE - THIS CORRESPONDS TO ALEX' LIPID TOPOLOGIES
+; Alex' Lipid EXtension 
+alex
+
+
+[ assign ]
+D1A C1A
+D2A C2A
+D3A C3A
+D4A C4A
+D5A C5A
+D1B C1B
+D2B C2B
+D3B C3B
+D4B C4B
+D5B C5B
+C1A D1A
+C2A D2A
+C3A D3A
+C4A D4A
+C5A D5A
+C1B D1B
+C2B D2B
+C3B D3B
+C4B D4B
+C5B D5B
+
+
+[ atoms ]
+; Tail 1
+    1  CGS1   GL2 
+    2  OGS1   GL2 GL2 GL2 C1B
+    3  CES1   GL2 C1B
+    4  OES1   
+    5  C102   C1B C1B C1B GL2
+    6  C103   C1B
+; End of ester region
+    7  C104   C1B C1B C1B C1B C2B
+    8  C105   C1B C1B C1B C2B C2B
+    9  C106   C2B C2B C2B C1B C1B
+   10  C107   C2B C2B C2B C2B C1B
+   11  C108   C2B
+   12  C109   C2B C2B C2B C3B
+   13  C110   C2B C3B  
+   14  C111   C3B C3B C3B C2B
+   15  C112   C3B
+   16  C113   C3B C3B C3B C4B
+   17  C114   C3B C4B
+   18  C115   C4B C4B C4B C3B
+   19  C116   C4B
+   20  C117   C4B C4B C4B C5B
+   21  C118   C4B C5B
+   22  C119   C5B C5B C5B C4B
+   23  C120   C5B
+   24  C121
+   25  C122
+; Tail 2
+   26  CGS2   GL1 
+   27  OGS2   GL1 GL1 GL1 C1A
+   28  CES2   GL1 C1A
+   29  OES2   
+   30  C202   C1A C1A C1A GL1
+   31  C203   C1A 
+; End of ester region
+   32  C204   C1A C1A C1A C1A C2A
+   33  C205   C1A C1A C1A C2A C2A 
+   34  C206   C2A C2A C2A C1A C1A 
+   35  C207   C2A C2A C2A C2A C1A
+   36  C208   C2A 
+   37  C209   C2A C2A C2A C3A
+   38  C210   C2A C3A
+   39  C211   C3A C3A C3A C2A
+   40  C212   C3A
+   41  C213   C3A C3A C3A C4A
+   42  C214   C3A C4A
+   43  C215   C4A C4A C4A C3A
+   44  C216   C4A
+   45  C217   C4A C4A C4A C3A
+   46  C218   C4A C5A
+   47  C219   C5A C5A C5A C4A
+   48  C220   C5A
+   49  C221
+   50  C222
+; Linker atom
+   51  CGS3   GL1 GL1 PO4
+; Phosphate group 
+   52  OGS3   PO4 PO4 GL1
+   53  PPC    PO4
+   54  OPC1   PO4
+   55  OPC2   PO4
+   56  OPC3   PO4 PO4 NC3
+   57  CPC1   NC3 PO4
+   58  CPC2   NC3 NC3 PO4
+; Terminal head group (choline)
+   59  NPC    NC3 
+   60  CPC3   NC3
+   61  CPC4   NC3 
+   62  CPC5   NC3
+
+
+;;;making a choline group
+[out]
+CPC4 NPC CPC3 CPC2
+
+[chiral]
+CPC5 NPC CPC3 CPC4 CPC2 
+
+
+; Extending tails
+; ===============
+
+[ trans ]
+C121 C120 C119 C118
+C221 C220 C219 C218
+
+[ assign ]
+C122 C121 
+C222 C221
+
+
+; Acyl esters
+; ===========
+; This reconstruction is somewhat complex. Unfortunately
+; the Gromos united atom force field does not have
+; correct dihedrals for acyl esters and these groups
+; have to be built with correct geometry. Only setting
+; the C-O-CO-C dihedrals correct is not sufficient, as
+; the distortions may be so large that the dihedrals
+; are pushed over the barrier. Therefore, the whole
+; glycerol group is rebuilt so as to form a buffer.
+
+; Acyl ester 1
+; ------------
+
+[ chiral ]
+x CGS2 OGS2 CGS1 CGS3
+
+[ trans ]
+OES2 CES2 CGS2 x
+
+[ out ]
+OGS2 CES2 OES2 C202
+
+[ trans ]
+C202 CES2 OGS2 CGS2
+
+[ out ]
+OES2 CES2 OGS2 C202
+
+; Acyl ester 2
+; ------------
+
+[ out ]
+y CGS1 CGS2 OGS1
+
+[ chiral ]
+z CGS1 OGS1 CGS2 y
+
+[ trans ]
+OES1 CES1 CGS1 z
+
+[ out ]
+OGS1 CES1 OES1 C102
+
+[ trans ]
+C102 CES1 OGS1 CGS1
+
+[ out ]
+OES1 CES1 OGS1 C102
+
+

@@ -1,0 +1,345 @@
+; Mapping file created 22.11.2013 by Iwona
+
+[ molecule ]
+GM1
+
+[ martini ]
+GM1 GM2 GM3 GM4 GM5 GM6 GM7 GM8 GM9 GM10 GM11 GM12 GM13 GM14 GM15 GM16 GM17 AM1 AM2 C1B C2B C3B C4B C5B D1A C2A C3A C4A
+;
+; GM12-GM11-GM10-GM9-GM8-GM7-GM6-GM5-GM4-GM3-GM2-GM1-AM1-D1A-C2A-C3A-C4A
+;                             |                       |
+;        GM17-GM16-GM15-GM14-GM13                    AM2-C1B-C2B-C3B-C4B-C5B  
+;
+
+[ mapping ]
+amber amber99SB amber 99SB-ildn
+
+[ atoms ]
+    1     C1  AM1                             ;  C1   CER A  1 	Based on Lopez et al., JCTC 2013
+    2    H1A  AM1                             ;  H1A  CER A  1  by Iwona Siuda UofC, 21.11.2013
+    3    H1B  AM1                             ;  H1B  CER A  1
+    4     C2  AM1                             ;  C2   CER A  1
+    5     H2  AM1                             ;  H2   CER A  1
+    6    C19  AM1                             ;  C19  CER A  1
+    7    HH0  AM1                             ; 1H0   CER A  1
+    8    O19  AM1                             ;  O19  CER A  1
+    9    H09  AM1                             ;  H09  CER A  1
+   10    C20  D1A                             ;  C20  CER A  1
+   11    H34  D1A                             ;  H34  CER A  1
+   12    C21  D1A                             ;  C21  CER A  1
+   13    H35  D1A                             ;  H35  CER A  1
+   14    C22  D1A                             ;  C22  CER A  1
+   15    H36  D1A                             ;  H36  CER A  1
+   16    H37  D1A                             ;  H37  CER A  1
+   17    C23  C2A                             ;  C23  CER A  1
+   18    H38  C2A                             ;  H38  CER A  1
+   19    H39  C2A                             ;  H39  CER A  1
+   20    C24  C2A                             ;  C24  CER A  1
+   21    H40  C2A                             ;  H40  CER A  1
+   22    HH4  C2A                             ; 1H4   CER A  1
+   23    C25  C2A                             ;  C25  CER A  1
+   24    H22  C2A                             ; 2H4   CER A  1
+   25    H23  C2A                             ; 3H4   CER A  1
+   26    C26  C2A                             ;  C26  CER A  1
+   27    H44  C2A                             ;  H44  CER A  1
+   28    H45  C2A                             ;  H45  CER A  1
+   29    C27  C3A                             ;  C27  CER A  1
+   30    H46  C3A                             ;  H46  CER A  1
+   31    H47  C3A                             ;  H47  CER A  1
+   32    C28  C3A                             ;  C28  CER A  1
+   33    H48  C3A                             ;  H48  CER A  1
+   34    H49  C3A                             ;  H49  CER A  1
+   35    C29  C3A                             ;  C29  CER A  1
+   36    H50  C3A                             ;  H50  CER A  1
+   37    HH5  C3A                             ; 1H5   CER A  1
+   38    C30  C3A                             ;  C30  CER A  1
+   39    H31  C3A                             ; 2H5   CER A  1
+   40    H32  C3A                             ; 3H5   CER A  1
+   41    C31  C4A                             ;  C31  CER A  1
+   42    H54  C4A                             ;  H54  CER A  1
+   43    H55  C4A                             ;  H55  CER A  1
+   44    C32  C4A                             ;  C32  CER A  1
+   45    H56  C4A                             ;  H56  CER A  1
+   46    H57  C4A                             ;  H57  CER A  1
+   47    C33  C4A                             ;  C33  CER A  1
+   48    H58  C4A                             ;  H58  CER A  1
+   49    H59  C4A                             ;  H59  CER A  1
+   50    C34  C4A                             ;  C34  CER A  1
+   51    H60  C4A                             ;  H60  CER A  1
+   52    HH6  C4A                             ; 1H6   CER A  1
+   53    H33  C4A                             ; 2H6   CER A  1
+   54      N  AM2                             ;  N    CER A  1
+   55     HN  AM2                             ;  HN   CER A  1
+   56     C3  AM2                             ;  C3   CER A  1
+   57     O3  AM2                             ;  O3   CER A  1
+   58     C4  C1B                             ;  C4   CER A  1
+   59     H3  C1B                             ;  H3   CER A  1
+   60     H4  C1B                             ;  H4   CER A  1
+   61     C5  C1B                             ;  C5   CER A  1
+   62     H5  C1B                             ;  H5   CER A  1
+   63     H6  C1B                             ;  H6   CER A  1
+   64     C6  C1B                             ;  C6   CER A  1
+   65     H7  C1B                             ;  H7   CER A  1
+   66     H8  C1B                             ;  H8   CER A  1
+   67     C7  C2B                             ;  C7   CER A  1
+   68     H9  C2B                             ;  H9   CER A  1
+   69    H10  C2B                             ;  H10  CER A  1
+   70     C8  C2B                             ;  C8   CER A  1
+   71    HH1  C2B                             ; 1H1   CER A  1
+   72    H74  C2B                             ; 2H1   CER A  1
+   73     C9  C2B                             ;  C9   CER A  1
+   74    H75  C2B                             ; 3H1   CER A  1
+   75    H14  C2B                             ;  H14  CER A  1
+   76    C10  C3B                             ;  C10  CER A  1
+   77    H15  C3B                             ;  H15  CER A  1
+   78    H16  C3B                             ;  H16  CER A  1
+   79    C11  C3B                             ;  C11  CER A  1
+   80    H17  C3B                             ;  H17  CER A  1
+   81    H18  C3B                             ;  H18  CER A  1
+   82    C12  C3B                             ;  C12  CER A  1
+   83    H19  C3B                             ;  H19  CER A  1
+   84    H20  C3B                             ;  H20  CER A  1
+   85    C13  C4B                             ;  C13  CER A  1
+   86    HH2  C4B                             ; 1H2   CER A  1
+   87    H76  C4B                             ; 2H2   CER A  1
+   88    C14  C4B                             ;  C14  CER A  1
+   89    H77  C4B                             ; 3H2   CER A  1
+   90    H24  C4B                             ;  H24  CER A  1
+   91    C15  C4B                             ;  C15  CER A  1
+   92    H25  C4B                             ;  H25  CER A  1
+   93    H26  C4B                             ;  H26  CER A  1
+   94    C16  C5B                             ;  C16  CER A  1
+   95    H27  C5B                             ;  H27  CER A  1
+   96    H28  C5B                             ;  H28  CER A  1
+   97    C17  C5B                             ;  C17  CER A  1
+   98    H29  C5B                             ;  H29  CER A  1
+   99    H30  C5B                             ;  H30  CER A  1
+  100    C18  C5B                             ;  C18  CER A  1
+  101    HH3  C5B                             ; 1H3   CER A  1
+  102    H78  C5B                             ; 2H3   CER A  1
+  103    H79  C5B                             ; 3H3   CER A  1
+  104     O1  GM1                             ;  O1   4GB(ROH) A   1
+  105    C35  GM1                             ;  C1   4GB A  2
+  106     H1  GM1                             ;  H1   4GB A  2
+  107     O5  GM2                             ;  O5   4GB A  2
+  108    C55  GM2                             ;  C5   4GB A  2
+  109    H66  GM2                             ;  H5   4GB A  2
+  110    C60  GM2                             ;  C6   4GB A  2
+  111    H61  GM2                             ;  H61  4GB A  2
+  112    H62  GM2                             ;  H62  4GB A  2
+  113     O6  GM2                             ;  O6   4GB A  2
+  114    H6O  GM2                             ;  H6O  4GB A  2
+  115    C50  GM3                             ;  C4   4GB A  2
+  116    H52  GM3                             ;  H4   4GB A  2
+  117    C45  GM3                             ;  C3   4GB A  2
+  118    H41  GM3                             ;  H3   4GB A  2
+  119    O10  GM3                             ;  O3   4GB A  2
+  120    H3O  GM3                             ;  H3O  4GB A  2
+  121    C40  GM1                             ;  C2   4GB A  2
+  122    H11  GM1                             ;  H2   4GB A  2
+  123     O2  GM1                             ;  O2   4GB A  2
+  124    H2O  GM1                             ;  H2O  4GB A  2
+  125     O4  GM3                             ;  O4   4GB A  2
+  126    C36  GM4                             ;  C1   WLB A  3
+  127    H80  GM4                             ;  H1   WLB A  3
+  128    O14  GM5                             ;  O5   WLB A  3
+  129    C56  GM5                             ;  C5   WLB A  3
+  130    H67  GM5                             ;  H5   WLB A  3
+  131    C61  GM5                             ;  C6   WLB A  3
+  132    H83  GM5                             ;  H61  WLB A  3
+  133    H86  GM5                             ;  H62  WLB A  3
+  134    O17  GM5                             ;  O6   WLB A  3
+  135    H89  GM5                             ;  H6O  WLB A  3
+  136    C51  GM6                             ;  C4   WLB A  3
+  137    H53  GM6                             ;  H4   WLB A  3
+  138    C46  GM6                             ;  C3   WLB A  3
+  139    H42  GM6                             ;  H3   WLB A  3
+  140    O11  GM6                             ;  O3   WLB A  3
+  141    C41  GM4                             ;  C2   WLB A  3
+  142    H12  GM4                             ;  H2   WLB A  3
+  143    O22  GM4                             ;  O2   WLB A  3
+  144    H93  GM4                             ;  H2O  WLB A  3
+  145    O24  GM6                             ;  O4   WLB A  3
+  146    C37  GM7                             ;  C1   3VB A  4
+  147    H81  GM7                             ;  H1   3VB A  4
+  148    O15  GM8                             ;  O5   3VB A  4
+  149    C57  GM8                             ;  C5   3VB A  4
+  150    H68  GM8                             ;  H5   3VB A  4
+  151    C62  GM8                             ;  C6   3VB A  4
+  152    H84  GM8                             ;  H61  3VB A  4
+  153    H87  GM8                             ;  H62  3VB A  4
+  154    O18  GM8                             ;  O6   3VB A  4
+  155    H90  GM8                             ;  H6O  3VB A  4
+  156    C52  GM9                             ;  C4   3VB A  4
+  157    H63  GM9                             ;  H4   3VB A  4
+  158    O25  GM9                             ;  O4   3VB A  4
+  159    H4O  GM9                             ;  H4O  3VB A  4
+  160    C47  GM9                             ;  C3   3VB A  4
+  161    H43  GM9                             ;  H3   3VB A  4
+  162    C42  GM7                             ;  C2   3VB A  4
+  163    H13  GM7                             ;  H2   3VB A  4
+  164     N2  GM7                             ;  N2   3VB A  4
+  165    H2N  GM7                             ;  H2N  3VB A  4
+  166    C2N  GM7                             ;  C2N  3VB A  4
+  167    O2N  GM7                             ;  O2N  3VB A  4
+  168    CME  GM7                             ;  CME  3VB A  4
+  169    H1M  GM7                             ;  H1M  3VB A  4
+  170    H2M  GM7                             ;  H2M  3VB A  4
+  171    H3M  GM7                             ;  H3M  3VB A  4
+  172    O12  GM9                             ;  O3   3VB A  4
+  173    C38  GM10                            ;  C1   0LB A  5
+  174    H82  GM10                            ;  H1   0LB A  5
+  175    O16  GM11                            ;  O5   0LB A  5
+  176    C58  GM11                            ;  C5   0LB A  5
+  177    H69  GM11                            ;  H5   0LB A  5
+  178    C63  GM11                            ;  C6   0LB A  5
+  179    H85  GM11                            ;  H61  0LB A  5
+  180    H88  GM11                            ;  H62  0LB A  5
+  181    O20  GM11                            ;  O6   0LB A  5
+  182    H91  GM11                            ;  H6O  0LB A  5
+  183    C53  GM12                            ;  C4   0LB A  5
+  184    H64  GM12                            ;  H4   0LB A  5
+  185    O26  GM12                            ;  O4   0LB A  5
+  186    H95  GM12                            ;  H4O  0LB A  5
+  187    C48  GM12                            ;  C3   0LB A  5
+  188    H51  GM12                            ;  H3   0LB A  5
+  189    O13  GM12                            ;  O3   0LB A  5
+  190    H92  GM12                            ;  H3O  0LB A  5
+  191    C43  GM10                            ;  C2   0LB A  5
+  192    H21  GM10                            ;  H2   0LB A  5
+  193    O23  GM10                            ;  O2   0LB A  5
+  194    H94  GM10                            ;  H2O  0LB A  5
+  195    C44  GM13                            ;  C2   0SA A  6
+  196    C39  GM13                            ;  C1   0SA A  6
+  197    O1A  GM13                            ;  O1A  0SA A  6
+  198    O1B  GM13                            ;  O1B  0SA A  6
+  199    C49  GM14                            ;  C3   0SA A  6
+  200    H3A  GM14                            ;  H3A  0SA A  6
+  201    H3E  GM14                            ;  H3E  0SA A  6
+  202    C54  GM14                            ;  C4   0SA A  6
+  203    H65  GM14                            ;  H4   0SA A  6
+  204    O27  GM14                            ;  O4   0SA A  6
+  205    H96  GM14                            ;  H4O  0SA A  6
+  206    C59  GM17                            ;  C5   0SA A  6
+  207    H70  GM17                            ;  H5   0SA A  6
+  208     N5  GM17                            ;  N5   0SA A  6
+  209    H5N  GM17                            ;  H5N  0SA A  6
+  210    C5N  GM17                            ;  C5N  0SA A  6
+  211    O5N  GM17                            ;  O5N  0SA A  6
+  212    C68  GM17                            ;  CME  0SA A  6
+  213    H97  GM17                            ;  H1M  0SA A  6
+  214    H98  GM17                            ;  H2M  0SA A  6
+  215    H99  GM17                            ;  H3M  0SA A  6
+  216    C64  GM15                            ;  C6   0SA A  6
+  217    O21  GM15                            ;  O6   0SA A  6
+  218    H71  GM15                            ;  H6   0SA A  6
+  219    C65  GM15                            ;  C7   0SA A  6
+  220    H72  GM15                            ;  H7   0SA A  6
+  221     O7  GM15                            ;  O7   0SA A  6
+  222    H7O  GM15                            ;  H7O  0SA A  6
+  223    C66  GM16                            ;  C8   0SA A  6
+  224    H73  GM16                            ;  H8   0SA A  6
+  225     O8  GM16                            ;  O8   0SA A  6
+  226    H8O  GM16                            ;  H8O  0SA A  6
+  227    C67  GM16                            ;  C9   0SA A  6
+  228    H9R  GM16                            ;  H9R  0SA A  6
+  229    H9S  GM16                            ;  H9S  0SA A  6
+  230     O9  GM16                            ;  O9   0SA A  6
+  231    H9O  GM16                            ;  H9O  0SA A  6
+    
+;ceramide
+[chiral]
+H2 C2 N C19 C1
+HH0 C19 C20 O19 C2
+
+; acyl esters
+[trans]
+C19 C20 C21 C22
+[ out ]
+O3 C3 C4 N
+HN N C3 C2
+
+;4BG
+[ chiral ]
+H1 C35 O5 O1 C40     ;H1 C35 O5 O1 C40
+H11 C40 O2 C35 C45   ;H11 C40 O2 C35 C45
+H41 C45 O10 C50 C40  ;H41 C45 O10 C50 C40 
+H52 C50 O4 C45 C55   ;H52 C50 O4 C45 C55
+H66 C55 O5 C50 C60   ;H66 C55 O5 C50 C60
+[out]
+;H1 O5 C35 O1 C40
+;H41 O10 C45 C50 C40
+;H66 O5 C55 C50 C60
+[trans]
+;H1 C35 C40 H11
+;H11 C40 C45 H41
+;H41 C45 C50 H52
+;H55 C50 C55 H66
+
+;WLB
+[ chiral ]
+H80 C36 O14 O4 C41   ;H80 C36 O14 O4 C41
+H12 C41 O22 C46 C36  ;H12 C41 O22 C46 C36 
+H42 C46 O11 C51 C41  ;H42 C46 O11 C51 C41
+H53 C51 O24 C46 C56  ;H53 C51 O24 C46 C56
+H67 C56 O14 C51 C61  ;H67 C56 O14 C51 C61
+[out]
+;H80 O14 C36 O4 C41
+;H42 O11 C46 C51 C41
+;H67 O14 C56 C51 C61
+[trans]
+;H80 C36 C41 H12
+;H12 C41 C46 H42
+
+;3VB
+[ chiral ]
+H81 C37 O24 O15 C42  ;H81 C37 O24 O15 C42
+H13 C42 N2 C37 C47   ;H13 C42 N2 C37 C47
+H43 C47 O12 C52 C42  ;H43 C47 O12 C52 C42
+H63 C52 O25 C47 C57  ;H63 C52 O25 C47 C57
+H68 C57 O15 C52 C62  ;H68 C57 O15 C52 C62
+[ out ]
+;H81 O24 C37 O15 C42
+;H43 O12 C47 C52 C42
+;H68 O15 C57 C52 C62
+[trans]
+;H81 C37 C42 H13
+;H13 C42 C47 H43
+[ out ]
+H2N N2 C42 C2N
+O2N C2N N2 CME
+
+;0LB
+[ chiral ]
+H82 C38 O12 O16 C43  ;H82 C38 O12 O16 C43
+H21 C43 O23 C48 C38  ;H21 C43 O23 C48 C38
+H51 C48 O13 C43 C53  ;H51 C48 O13 C43 C53
+H64 C53 O26 C48 C58  ;H64 C53 O26 C48 C58
+H69 C58 O16 C53 C63  ;H69 C58 O16 C53 C63
+[out]
+;H82 O12 C38  O16 C43
+;H51 O13 C48  C43 C53
+;H69 O16 C58 C53 C63
+[trans]
+;H82 C38 C43 H21
+;H21 C43 C48 H51
+
+;0SA
+[ chiral ]
+C39 C44 C49 O11 O21  ;C49 C44 C39 O11 O21
+H65 C54 O27 C59 C49  ;H65 C54 O27 C59 C49
+H70 C59 N5 C64 C54   ;H70 C59 N5 C64 C54
+H71 C64 O21 C65 C59  ;H71 C64 O21 C65 C59
+[out]
+;C39 C49 C44 O11 O21
+;H65 O27 C54 C59 C49
+;H71 O21 C64  C65 C59
+[trans]
+;H71 C64 C59 H70
+;H70 C59 C54 H65
+;H65 C54 C49 H3A
+[ out ]
+H5N N5 C59 C5N
+O5N C5N N5 C68
+O1A C39 C44 O1B
+O1B C39 C44 O1A

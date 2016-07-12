@@ -1,0 +1,38 @@
+; Created by Clement on 4.9.2013
+[ molecule ]
+LIP
+
+[ cooke ]
+A B1 B2
+
+[ mapping ]
+martini
+
+[ atoms ]
+; Head group (phosphatidylcholine)
+    1  NC3  A
+    2  PO4  A
+    3  GL1  A B1
+    4  GL2  A B1
+; Tail (diacylglycerol)
+    5  C1A  B1 B1 B1 A
+    6  C2A  B1 B1 B1 B2
+    7  D3A  B1 B2
+    8  C4A  B2 B2 B2 B1
+    9  C5A  B2
+   10  C1B  
+   11  C2B  
+   12  D3B  
+   13  C4B  
+   14  C5B  
+
+[ out ]
+GL2 GL1 GL2 C1A
+
+[ trans ]
+C1B C1A GL2 GL1
+C2B C2A C1B C1A
+D3B D3A C2B C2A
+C4B C4A D3B D3A
+C5B C5A C4B C4A
+

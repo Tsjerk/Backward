@@ -1,0 +1,101 @@
+
+[ molecule ]
+TRE            
+
+[ martini ]
+B1 B2 B3 B4 B5 B6
+;
+;  B1    B5
+;   \     \
+;    B2----B4
+;   /     /
+;  B3    B6
+;
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+     1     O41  B2 
+     2    HO41  
+     3     C41 
+     4     C31  B3 B2
+     5     O31  B3
+     6    HO31 
+     7     C21 
+     8     O21 
+     9    HO21 
+    10     C61  B1
+    11     O61 
+    12    HO61 
+    13     C51  B1 B2
+    14     O51 
+    15     C11  B2 B2 B2 B4
+    16     O11  B2 B4
+    17     C42 
+    18     O42  B4
+    19    HO42 
+    20     C32  B6 B4
+    21     O32  B6
+    22    HO32 
+    23     C22 
+    24     O22 
+    25    HO22 
+    26     C62  B5
+    27     O62 
+    28    HO62 
+    29     C52  B4 B5
+    30     O52 
+    31     C12  B4 B4 B4 B2
+
+
+; Building first ring
+; Note we 'stored' the B2 position on O41
+ 
+[ trans ]
+C21 C11 C31 O41
+O51 C11 C51 O41 
+
+[ out ]
+C41 O41 O51 C21
+O21 C21 C11 C31
+HO21 C21 C11 C31
+O41 C41 C51 C31
+HO41 C41 C51 C31
+
+[ trans ]
+O61 C61 C51 C41
+HO61 C61 C51 C41
+
+[ chiral ]
+C11 O11 C21 O51
+C31 O31 C41 C21
+C51 O51 C41 C61
+C21 O21 C11 C31
+C41 O41 C31 C51
+
+; Building second ring
+; Note we 'stored' the B4 position on O42
+ 
+[ trans ]
+C22 C12 C32 O42
+O52 C12 C52 O42 
+
+[ out ]
+C42 O42 O52 C22
+O22 C22 C12 C32
+HO22 C22 C12 C32
+O42 C42 C52 C32
+HO42 C42 C52 C32
+
+[ trans ]
+O62 C62 C52 C42
+HO62 C62 C52 C42
+
+[ chiral ]
+C12 O11 C22 O52
+C32 O32 C42 C22
+C52 O52 C42 C62
+C22 O22 C12 C32
+C42 O42 C32 C52
+

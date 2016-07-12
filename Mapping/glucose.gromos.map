@@ -1,0 +1,70 @@
+
+[ molecule ]
+GLUC            
+
+[ martini ]
+B1 B2 B3
+;
+;    B1   
+;    /\
+;   /  \ 
+;  B2--B3
+;
+
+;
+; Glucose
+; Beta-D-glucopyranoside
+;
+;   C6 - O6 - H6
+;   |
+;   C5 - O5 - C1 - O1 - H1
+;   |         |         
+;   C4 - C3 - C2        
+;   |    |    |
+;   O4   O3   O2
+;   |    |    |
+;   H4   H3   H2
+;
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+    1     C1  B1 B2 B3 B2 B2 B2
+    2     O1  B2
+    3     H1
+    4     C5  B1 B2 B3 B1 B1 B1
+    5     O5  B1 B2
+    6     C2  B2 B3
+    7     O2 
+    8    HO2 
+    9     C3  B1 B2 B3 B3 B3 B3
+   10     O3  B3
+   11    HO3 
+   12     C4  B1 B3
+   13     O4   
+   14    HO4  
+   15     C6  B1
+   16     O6 
+   17    HO6 
+
+; Building the ring
+[ out ]
+O2 C2 C1 C3
+H2 C2 C1 C3
+O4 C4 C3 C5
+H4 C4 C3 C5
+
+[ trans ]
+O6 C6 C5 O5
+H6 C6 C5 O5
+H1 O1 C1 C2
+H3 O3 C3 C4 
+
+[ chiral ]
+C1 O1 C2 O5
+C3 O3 C4 C2
+C5 O5 C4 C6
+C2 O2 C1 C3
+C4 O4 C3 C5
+

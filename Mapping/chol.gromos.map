@@ -1,0 +1,50 @@
+[ molecule ]
+CHOL
+
+[ martini ]
+ROH R1 R2 R3 R4 R5 C1 C2
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+ 1 C1   R1 
+ 2 C2   R1 
+ 3 C3   R1 
+ 4 C4   ROH 
+ 5 C5	ROH ROH ROH R1 
+ 6 O6   ROH
+ 7 H    ROH
+ 8 C8   ROH ROH ROH R2
+ 9 C9   R1 ROH ROH R2 R2
+10 C10  R2 R2 R2 R2 ROH
+11 C11  R2 
+12 C12  R2 R2 R3 R4
+13 C13  R3 R3 R3 ROH R2
+14 C14  R3 
+15 C15  R3 R3 R3 C1
+16 C16  R5 
+17 C17  R5
+18 C18  R4 R4 R3
+19 C19  R4 
+20 C20  R4 R4 C1
+21 C21  R5 R3 R4 C1 C1
+22 C22  C1 C1 C1 R4
+23 C23  C1 C1 C1 R3
+24 C24  C1
+25 C25  C1 C1 C1 C2
+26 C26  C2 C1
+27 C27  C2 C2 C2 C1
+28 C28  C2
+29 C29  C2
+
+
+[out]
+C4 C5 O6 C8
+[trans]
+C3 C4 C5 O6 
+
+[chiral]
+C1 C2 C3 C9 C13
+[ chiral ]
+C17 C16 C18 C21 C15

@@ -1,0 +1,30 @@
+[ molecule ]
+SEP
+
+[ martini ]
+BB SC1 PO4
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    CB   SC1 BB 
+    5    OG   SC1 
+    6     P   PO4
+    7   O1P   
+    8   O2P   
+    9   O3P
+   10     C    BB
+   11     O    BB
+
+[ chiral ]
+  CB     CA    N    C
+
+[ out ]
+O2P P O1P OG
+[ chiral ]
+O3P P O2P OG
+O1P P O2P O3P OG

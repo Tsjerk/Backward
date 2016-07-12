@@ -1,0 +1,22 @@
+[ molecule ]
+LEU
+
+[ martini ]
+BB SC1
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    CB   SC1 BB BB
+    5    CG   SC1 SC1 BB
+    6   CD1   SC1
+    7   CD2   SC1
+    8     C    BB
+    9     O    BB
+
+[ chiral ]
+  CB     CA    N    C

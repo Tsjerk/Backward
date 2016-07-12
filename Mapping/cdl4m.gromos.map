@@ -1,0 +1,210 @@
+; Created by Kri on 16.4.2013
+; modified for 4-myristoyl cardiolipin by TAW (130812)
+[ molecule ]
+CL4M
+
+[ martini ]
+GL5 PO41 GL1 GL2 C1A C2A C3A C1B C2B C3B PO42 GL3 GL4 C1A2 C2A2 C3A2 C1B2 C2B2 C3B2
+;
+; GL1-C1A-C2A-C3A (sn2_1)
+; |
+; PO41-GL2-C1B-C2B-C3B (sn1_1)
+; |
+; GL5 
+; |
+; PO42-GL3-C1A2-C2A2-C3A2 (sn2_2)
+; |
+; GL4-C1B2-C2B2-C3B2 (sn1_2)
+
+[ mapping ]
+gromos  gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+;sn1_1
+  1  	CGS11   GL2
+  2  	OGS11   GL2 GL2 GL2 C1B
+  3  	CES11   GL2 C1B
+  4  	OES11   
+  5  	C1021   C1B C1B C1B GL2
+  6  	C1031   C1B
+  7  	C1041   C1B C1B C1B C2B
+  8  	C1051   C1B C1B C2B
+  9  	C1061   C2B C2B C1B 
+ 10  	C1071   C2B C2B C2B C1B
+ 11  	C1081   C2B
+ 12  	C1091   C2B C2B C2B C3B
+ 13  	C1101   C2B C2B C3B
+ 14  	C1111   C3B C2B
+ 15  	C1121   C3B C3B C2B
+ 16  	C1131   C3B C3B C3B C2B
+ 17  	C1141   C3B
+; sn2_1 
+ 22  	CGS21   GL1 
+ 23  	OGS21   GL1  GL1  GL1  C1A 
+ 24  	CES21   GL1  C1A
+ 25  	OES21   
+ 26  	C2021   C1A C1A C1A GL1
+ 27  	C2031   C1A
+ 28  	C2041   C1A C1A C1A C2A
+ 29  	C2051   C1A C1A C2A
+ 30  	C2061   C2A C2A C1A
+ 31  	C2071   C2A C2A C2A C1A
+ 32  	C2081   C2A
+ 33  	C2091   C2A C2A C2A C3A
+ 34  	C2101   C2A C2A C3A  
+ 35  	C2111   C3A C2A 
+ 36  	C2121   C3A C3A C2A
+ 37  	C2131   C3A C3A C3A C2A
+ 38  	C2141   C3A 
+; Cgama 1
+ 43  	CGS31   GL1  GL1  PO41 
+; phosphate1
+ 44  	 OGS3   PO41 PO41 GL1
+ 45  	 PCL1   PO41
+ 46  	 OCL1   
+ 47  	 OCL2   
+ 48  	 OCL3   PO41 PO41 GL5
+; central/headgroup glycerol
+ 49  	 CCL1   GL5  GL5  PO41
+ 50  	 CCL2	GL5   
+ 51  	 OCL4   
+ 52  	 HCL4   
+ 53  	 CCL3   GL5  GL5  PO42
+;phosphate2
+ 54  	 OCL5   PO42 PO42 GL5
+ 55  	 PCL2   PO42 
+ 56  	 OCL6   
+ 57  	 OCL7   
+ 58  	 OCL8   PO42 PO42 GL3
+; sn1_2
+ 59  	CGS12   GL4
+ 60  	OGS12   GL4  GL4  GL4  C1B2
+ 61  	CES12   GL4  C1B2
+ 62  	OES12   
+ 63  	C1022   C1B2 C1B2 C1B2 GL4
+ 64  	C1032   C1B2
+ 65  	C1042   C1B2 C1B2 C1B2 C2B2
+ 66  	C1052   C1B2 C1B2 C2B2
+ 67  	C1062   C2B2 C2B2 C1B2
+ 68  	C1072   C2B2 C2B2 C2B2 C1B2
+ 69  	C1082   C2B2
+ 70  	C1092   C2B2 C2B2 C2B2 C3B2
+ 71  	C1102   C2B2 C2B2 C3B2
+ 72  	C1112   C3B2 C2B2
+ 73  	C1122   C3B2 C3B2 C2B2
+ 74  	C1132   C3B2 C3B2 C3B2 C2B2
+ 75  	C1142   C3B2 
+; sn2_2
+ 80  	CGS22   GL3
+ 81  	OGS22   GL3  GL3  GL3  C1A2
+ 82  	CES22   GL3  C1A2
+ 83  	OES22   
+ 84  	C2022   C1A2 C1A2 C1A2 GL3
+ 85  	C2032   C1A2
+ 86  	C2042   C1A2 C1A2 C1A2 C2A2
+ 87  	C2052   C1A2 C1A2 C2A2
+ 88  	C2062   C2A2 C2A2 C1A2
+ 89  	C2072   C2A2 C2A2 C2A2 C1A2
+ 90  	C2082   C2A2
+ 91  	C2092   C2A2 C2A2 C2A2 C3A2 
+ 92  	C2102   C2A2 C2A2 C3A2 
+ 93  	C2112   C3A2 C2A2
+ 94  	C2122   C3A2 C3A2 C2A2
+ 95  	C2132   C3A2 C3A2 C3A2 C2A2
+ 96  	C2142   C3A2 
+; C-gama glyc2
+101  	CGS32   GL3 GL3 PO42
+
+
+; Acyl esters
+; ===========
+; This reconstruction is somewhat complex. Unfortunately
+; the Gromos united atom force field does not have
+; correct dihedrals for acyl esters and these groups
+; have to be built with correct geometry. Only setting
+; the C-O-CO-C dihedrals correct is not sufficient, as
+; the distortions may be so large that the dihedrals
+; are pushed over the barrier. Therefore, the whole
+; glycerol group is rebuilt so as to form a buffer.
+
+; Acyl ester sn2_1
+; ------------
+
+[ chiral ]
+x CGS21 OGS21 CGS11 CGS31
+
+[ trans ]
+OES21 CES21 CGS21 x
+
+[ out ]
+OGS21 CES21 OES21 C2021
+
+[ trans ]
+C2021 CES21 OGS21 CGS21
+
+[ out ]
+OES21 CES21 OGS21 C2021
+
+; Acyl ester sn1_1
+; ------------
+
+[ out ]
+y CGS11 CGS21 OGS11
+
+[ chiral ]
+z CGS11 OGS11 CGS21 y
+
+[ trans ]
+OES11 CES11 CGS11 z
+
+[ out ]
+OGS11 CES11 OES11 C1021
+
+[ trans ]
+C1021 CES11 OGS11 CGS11
+
+[ out ]
+OES11 CES11 OGS11 C1021
+
+; Acyl ester sn2_2
+; ------------
+
+[ chiral ]
+x CGS22 OGS22 CGS12 CGS32
+
+[ trans ]
+OES22 CES22 CGS22 x
+
+[ out ]
+OGS22 CES22 OES22 C2022
+
+[ trans ]
+C2022 CES22 OGS22 CGS22
+
+[ out ]
+OES22 CES22 OGS22 C2022
+
+; Acyl ester sn1_2
+; ------------
+
+[ out ]
+y CGS12 CGS22 OGS12
+
+[ chiral ]
+z CGS12 OGS12 CGS22 y
+
+[ trans ]
+OES12 CES12 CGS12 z
+
+[ out ]
+OGS12 CES12 OES12 C1022
+
+[ trans ]
+C1022 CES12 OGS12 CGS12
+
+[ out ]
+OES12 CES12 OGS12 C1022
+
+
+
+

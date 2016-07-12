@@ -1,0 +1,39 @@
+[ molecule ]
+AOT 
+
+[ martini ]
+SO3 GL1 GL2 C1A C2A C1B C2B 
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+; Charged head group (sulfonate)
+    1   CSC1  GL2 
+    2   CES1  GL2 
+    3   OES1  GL2 
+    4   OSS1  GL2 
+    5   C101  C1B    
+    6   C102  C1B   
+    7   C103  C2B            
+    8   C104  C2B            
+    9   C105  C2B            
+   10   C106  C2B            
+   11   C121  C1B       
+   12   C122  C1B
+   13   CSC2  GL1  
+   14   CES2  GL1 
+   15   OES2  GL1 
+   16   OSS2  GL1 
+   17   C201  C1A
+   18   C202  C1A 
+   19   C203  C2A
+   20   C204  C2A 
+   21   C205  C2A
+   22   C206  C2A 
+   23   C221  C1A     
+   24   C222  C1A        
+   25   SAO   SO3         
+   26   OAO1  SO3         
+   27   OAO2  SO3         
+   28   OAO3  SO3     

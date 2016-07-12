@@ -1,0 +1,163 @@
+[ molecule ]
+DPG1
+
+[ martini ]
+GM1 GM2 GM3 GM4 GM5 GM6 GM7 GM8 GM9 GM10 GM11 GM12 GM13 GM14 GM15 GM16 GM17 AM1 AM2 T1A C2A C3A C1B C2B C3B C4B
+;
+;                     GM15-GM17
+;                    /   \
+;                  GM13-GM14-GM16
+;                   |
+;GM12-GM10-GM9-GM7-GM6-GM4-GM3-GM1-AM1-AM2-C1B-C2B-C3B-C4B
+;  \  /     \  /    \  /    \  /    |
+;  GM11     GM8     GM5      GM2   T1A-C2A-C3A
+;
+;                  NANA(D)
+;                    |
+; GAL2---GalNac----GAL1------GLC----
+;  (A)    (B)       (C)      (E)
+;
+; the mapping is based on Figure 5 in the Glycolipids paper: Cesar et al., JCTC, 2013, 9, 1694-1708
+; GM16 and GM17 are swithched. 
+
+[ mapping ]
+gromos  
+
+[ atoms ]
+; Galactose-A
+    1   HO4A GM12
+    2    O4A GM12
+    3    C4A GM12 GM12 GM11
+    4    C3A GM12 GM12 GM10
+    5    O3A GM12
+    6   HO3A GM12
+    7    C2A GM10 GM10 GM12
+    8    O2A GM10
+    9   HO2A GM10
+   10    C6A GM11
+   11    O6A GM11
+   12   HO6A GM11
+   13    C5A GM11 GM11 GM12
+   14    O5A GM11 GM11 GM10
+   15    C1A GM10 GM10 GM11
+   16    O1A  GM9
+ ; GalNac-B
+   17    C3B  GM9  GM9  GM7
+   18    C4B  GM9  GM9  GM8
+   19    O4B  GM9
+   20   HO4B  GM9
+   21    C2B  GM7  GM7  GM9
+   22     NB  GM7
+   23     HB  GM7
+   24     CB  GM7
+   25    CBB  GM7
+   26     OB  GM7
+   27    C6B  GM8
+   28    O6B  GM8
+   29   HO6B  GM8
+   30    C5B  GM8  GM8  GM9
+   31    O5B  GM8  GM8  GM7
+   32    C1B  GM7  GM7  GM8
+   33    O1B  GM6
+; Galactose-C
+   34    C4C  GM6  GM6  GM5
+   35    C3C  GM6  GM6  GM4
+   36    C2C  GM4  GM4  GM6
+   37    O2C  GM4
+   38   HO2C  GM4
+   39    C6C  GM5
+   40    O6C  GM5
+   41   HO6C  GM5
+   42    C5C  GM5  GM5  GM6
+   43    O5C  GM5  GM5  GM4
+   44    C1C  GM4  GM4  GM5
+   45    O1C  GM3
+; NANA-D  
+   46    C4' GM16 ; GM17 
+   47     N' GM16 ; GM17
+   48     H' GM16 ; GM17
+   49     C' GM16 ; GM17
+   50    CB' GM16 ; GM17
+   51     O' GM16 ; GM17
+   52    C3' GM14 GM14 GM15 ; GM15 GM15 GM14 ; ?
+   53    O3' GM14 ; GM15
+   54   HO3' GM14 ; GM15
+   55    C2' GM14 GM14 GM13 ; GM15 GM15 GM13 ; ?
+   56    C6' GM15 ; GM14 
+   57    O6' GM15 ; GM14
+   58   HO6' GM15 ; GM14
+   59    C7' GM17; GM16 
+   60    O7' GM17; GM16
+   61   HO7' GM17; GM16
+   62    C8' GM17; GM16
+   63    O8' GM17; GM16
+   64   HO8' GM17; GM16
+   65    C5' GM15 GM15 GM14 ; GM14 GM14 GM15 ; ?
+   66    O5' GM15 GM15 GM13 ; GM14 GM14 GM13 ; ?
+   67    C1' GM13 
+   68    O1'  GM6
+   69    CG' GM13
+   70   OD1' GM13
+   71   OD2' GM13
+; Glucose-E
+   72    C4D  GM3  GM3  GM2
+   73    C3D  GM3  GM3  GM1
+   74    O3D  GM3
+   75   HO3D  GM3
+   76    C2D  GM1  GM1  GM3
+   77    O2D  GM1
+   78   HO2D  GM1
+   79    C6D  GM2
+   80    O6D  GM2
+   81   HO6D  GM2
+   82    C5D  GM2  GM2  GM3
+   83    O5D  GM2  GM2  GM1
+   84    C1D  GM1  GM1  GM2
+   85    O1D  GM1
+; tails 1
+   86   CGS1  AM1
+   87   OCS1  AM1
+   88   HCS1  AM1
+   89   CCR1  AM1 
+   90   CCR2  AM1 ;?
+   91   C103  T1A
+   92   C104  T1A
+   93   C105  T1A
+   94   C106  T1A
+   95   C107  T1A
+   96   C108  C2A
+   97   C109  C2A
+   98   C110  C2A
+   99   C111  C2A
+  100   C112  C2A
+  101   C113  C3A
+  102   C114  C3A
+  103   C115  C3A
+  104   C116  C3A
+  105   C117  C3A
+; tails 2
+  106   CGS2  AM1
+  107   NAS2  AM2
+  108   HAS2  AM2
+  109   CAS2  AM2
+  110   OAS2  AM2
+  111   C202  AM2
+  112   C203  C1B
+  113   C204  C1B
+  114   C205  C1B
+  115   C206  C1B
+  116   C207  C2B
+  117   C208  C2B
+  118   C209  C2B
+  119   C210  C2B
+  120   C211  C3B
+  121   C212  C3B
+  122   C213  C3B
+  123   C214  C3B
+  124   C215  C3B
+  125   C216  C4B
+  126   C217  C4B
+  127   C218  C4B
+  128   C219  C4B
+  129   C220  C4B
+  130   CGS3  AM1

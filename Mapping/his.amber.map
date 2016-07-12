@@ -1,0 +1,42 @@
+[ molecule ]
+HIS  
+
+[ martini ]
+BB SC1 SC2 SC3
+
+[ mapping ]
+amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    HA    BB
+    5    CB   SC1 BB
+    6   HB1   SC1 BB
+    7   HB2   SC1 BB
+    8    CG   SC1
+    9   ND1   SC3 SC1
+   10   HD1   SC3 SC1
+   11   CE1   SC3 SC2
+   12   HE1   SC3
+   13   NE2   SC2
+   14   HE2   SC2
+   15   CD2   SC2 SC1
+   16   HD2   SC2 SC1
+   17     C    BB
+   18     O    BB
+
+[ chiral ]
+  CB     CA    N    C
+  HB1    CA    N    C
+  HB2    CA    N    C
+
+[ chiral ]
+  HA     CA    N    CB    C ; L-His
+; HA     CA    N    C    CB ; D-His
+
+[out]
+HD1 ND1 CG NE2
+HD2 CD2 CE1 CG
+HE2 NE2 CE1 CD2

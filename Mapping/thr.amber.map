@@ -1,0 +1,41 @@
+[ molecule ]
+THR
+
+[ martini ]
+BB SC1
+
+[ mapping ]
+amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    HA    BB
+    5    CB   SC1 BB BB 
+    6    HB   SC1 BB BB
+    7   CG2   SC1 
+    8   HG21  SC1 
+    9   HG22  SC1 
+   10   HG23  SC1 
+   11   OG1   SC1 SC1 BB
+   12   HG1   SC1
+   13     C    BB
+   14     O    BB
+
+[ chiral ]
+  CB     CA    N    C
+  HB     CA    N    C
+
+[ chiral ]
+  HA     CA    N    CB    C ; L-Thr
+; HA     CA    N    C    CB ; D-Thr
+
+[ out ] 
+OG1 CB CG2 CA
+[ trans ]
+HG1 OG1 CB CA
+
+[ chiral ]
+  HB  CB  CG2  OG1 CA  ; 3R stereoisomer (natural form)
+; HB  CB  CG2  CA  CG1 ; 3S stereoisomer

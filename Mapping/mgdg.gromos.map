@@ -1,0 +1,110 @@
+;Created by Kri on 07.03.2013
+[ molecule ]
+MGDG
+
+[ martini ]
+C1 C2 C3 GL1 GL2 C1A C2A C3A C4A C1B C2B C3B C4B
+
+;
+;C1—C2—C3-GL1-C1A-C2A-C3A-C4A
+;          |
+;         GL2-C1B-C2B-C3B-C4B
+
+[ mapping ]
+gromos
+
+[ atoms ]
+; All 
+    1   CGS1 GL2
+    2   OGS1 GL2 GL2 GL2 C1B 
+    3   CES1 GL2 GL2 C1B
+    4   OES1 GL2 C1B
+    5   C102 C1B C1B C1B GL2
+    6   C103 C1B
+    7   C104 C1B 
+    8   C105 C1B C1B C1B C2B
+    9   C106 C1B C2B 
+   10   C107 C2B C2B C1B
+   11   C108 C2B C2B
+   12   C109 C2B C2B C3B
+   13   C110 C2B C3B
+   14   C111 C3B C3B C2B
+   15   C112 C3B 
+   16   C113 C3B C3B C2B 
+   17   C114 C3B C4B
+   18   C115 C4B C4B C3B
+   19   C116 C4B C4B C4B C3B
+   20   C117 C4B C4B C4B C4B C3B
+   21   C118 C4B
+   22   CGS2 GL1
+   23   OGS2 GL1 GL1 GL1 C1A  
+   24   CES2 GL1 GL1 C1A
+   25   OES2 GL1 C1A
+   26   C202 C1A C1A C1A GL1 
+   27   C203 C1A 
+   28   C204 C1A C1A C1A C2A
+   29   C205 C1A C2A
+   30   C206 C2A C2A C1A 
+   31   C207 C2A
+   32   C208 C2A C2A C3A
+   33   C209 C2A C3A
+   34   C210 C3A C3A C2A
+   35   C211 C3A 
+   36   C212 C3A C3A C4A
+   37   C213 C3A C4A
+   38   C214 C4A C4A C3A
+   39   C215 C4A C4A C4A C3A 
+   40   C216 C4A
+   41   CGS3 GL1
+   42    O4  C1 
+   43   HO4  C1 
+   44    C4  C1 C1 C2
+   45    C3  C1 C1 C3
+   46    O3  C1 
+   47   HO3  C1 
+   48    C2  C3 C3 C1 
+   49    O2  C3 
+   50   HO2  C3 
+   51    C6  C2
+   52    O6  C2 
+   53   H06  C2 
+   54    C5  C2 C2 C1
+   55    O5  C2 C2 C3
+   56    C1  C3 C3 C2
+   57    O1  C3
+
+[ assign ]
+; control particles for the ring
+x1 C1
+x2 C2
+x3 C3
+x4 C4
+x5 C5
+x6 O5
+
+[ out ]
+O1 C1 C2 O5
+HO1 C1 C2 O5
+O2 C2 C1 C3
+HO2 C2 C1 C3
+O3 C3 C2 C4
+HO3 C3 C2 C4
+O4 C4 C3 C5
+HO4 C4 C3 C5
+C6 C5 O5 C4
+y6 O5 C5 C1
+
+[ chiral ]
+C1 x1 O1 x5 x2 ; up
+C2 x2 x1 O2 x3 ; down
+C3 x3 x2 x4 O3 ; up
+C4 x4 x3 O4 x5 ; down
+C5 x5 x4 x6 C6 ; up
+O5 x6 x1 x5 y6 ; down
+
+[ trans ]
+O6 C6 C5 C4
+HO6 C6 C5 C4
+
+
+

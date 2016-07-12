@@ -1,0 +1,17 @@
+[ molecule ]
+GLY
+
+[ martini ]
+BB
+
+[ mapping ]
+amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4   HA1    BB
+    5   HA2    BB
+    9     C    BB
+   10     O    BB

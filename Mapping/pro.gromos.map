@@ -1,0 +1,20 @@
+[ molecule ]
+PRO
+
+[ martini ]
+BB SC1
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+
+[ atoms ]
+    1     N    BB
+    2    CA    BB
+    3    CB   SC1 BB
+    4    CG   SC1
+    5    CD   SC1
+    6     C    BB
+    7     O    BB
+
+[ chiral ]
+  CB     CA    N    C

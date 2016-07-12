@@ -1,0 +1,383 @@
+[ molecule ]
+DPG1
+
+[ martini ]
+GM1 GM2 GM3 GM4 GM5 GM6 GM7 GM8 GM9 GM10 GM11 GM12 GM13 GM14 GM15 GM16 GM17 AM1 AM2 T1A C2A C3A C1B C2B C3B C4B
+;
+;                     GM15-GM17
+;                    /   \
+;                  GM13-GM14-GM16
+;                   |
+;GM12-GM10-GM9-GM7-GM6-GM4-GM3-GM1-AM1-AM2-C1B-C2B-C3B-C4B
+;  \  /     \  /    \  /    \  /    |
+;  GM11     GM8     GM5      GM2   T1A-C2A-C3A
+;
+;                 NANA(D)
+;                    |
+;   GAL---GalNac----GAL------GLC---
+;   (A)    (B)      (C)      (E)
+;
+; the mapping is based on Figure 5 in the Glycolipids paper: Cesar et al., JCTC, 2013, 9, 1694-1708
+; GM16 and GM17 are swithched. 
+
+[ mapping ]
+alex
+
+[ atoms ]
+; Galactose A
+    1   HO4A GM12
+    2    O4A GM12
+    3    C4A GM12 GM12 GM11
+    4    C3A GM12 GM12 GM10
+    5    O3A GM12
+    6   HO3A GM12
+    7    C2A GM10 GM10 GM12
+    8    O2A GM10
+    9   HO2A GM10
+   10    C6A GM11
+   11    O6A GM11
+   12   HO6A GM11
+   13    C5A GM11 GM11 GM12
+   14    O5A GM11 GM11 GM10
+   15    C1A GM10 GM10 GM11
+   16    O1A  GM9
+; GalNac B 
+   17    C3B  GM9  GM9  GM7
+   18    C4B  GM9  GM9  GM8
+   19    O4B  GM9
+   20   HO4B  GM9
+   21    C2B  GM7  GM7  GM9
+   22     NB  GM7
+   23     HB  GM7
+   24     CB  GM7
+   25    CBB  GM7
+   26     OB  GM7
+   27    C6B  GM8
+   28    O6B  GM8
+   29   HO6B  GM8
+   30    C5B  GM8  GM8  GM9
+   31    O5B  GM8  GM8  GM7
+   32    C1B  GM7  GM7  GM8
+   33    O1B  GM6
+; Galactose C
+   34    C4C  GM6  GM6  GM5
+   35    C3C  GM6  GM6  GM4
+   36    C2C  GM4  GM4  GM6
+   37    O2C  GM4
+   38   HO2C  GM4
+   39    C6C  GM5
+   40    O6C  GM5
+   41   HO6C  GM5
+   42    C5C  GM5  GM5  GM6
+   43    O5C  GM5  GM5  GM4
+   44    C1C  GM4  GM4  GM5
+   45    O1C  GM3  
+; NANA D
+   46    C4' GM14 GM14 GM15 ; GM16 ; GM17 
+   47     N' GM16 ; GM17
+   48     H' GM16 ; GM17
+   49     C' GM16 ; GM17
+   50    CB' GM16 ; GM17
+   51     O' GM16 ; GM17
+   52    C3' GM14 GM14 GM13 ; GM15 GM15 GM14 ; ?
+   53    O3' GM14 ; GM15
+   54   HO3' GM14 ; GM15
+   55    C2' GM13 GM13 GM14 ; GM15 GM15 GM13 ; ?
+   56    C6' GM15 ; GM14 
+   57    O6' GM15 ; GM14
+   58   HO6' GM15 ; GM14
+   59    C7' GM17; GM16 
+   60    O7' GM17; GM16
+   61   HO7' GM17; GM16
+   62    C8' GM17; GM16
+   63    O8' GM17; GM16
+   64   HO8' GM17; GM16
+   65    C5' GM15 GM15 GM14 ; GM14 GM14 GM15 ; ?
+   66    O5' GM15 GM15 GM13 ; GM14 GM14 GM13 ; ?
+   67    C1' GM13 GM13 GM15 
+   68    O1'  GM6
+   69    CG' GM13
+   70   OD1' GM13
+   71   OD2' GM13
+; Glucose E
+   72    C4D  GM3  GM3  GM2
+   73    C3D  GM3  GM3  GM1
+   74    O3D  GM3
+   75   HO3D  GM3
+   76    C2D  GM1  GM1  GM3
+   77    O2D  GM1
+   78   HO2D  GM1
+   79    C6D  GM2
+   80    O6D  GM2
+   81   HO6D  GM2
+   82    C5D  GM2  GM2  GM3
+   83    O5D  GM2  GM2  GM1
+   84    C1D  GM1  GM1  GM2
+   85    O1D  GM1
+; tails 1
+   86   CGS1  AM1
+   87   OCS1  AM1
+   88   HCS1  AM1
+   89   CCR1  T1A AM1 AM1
+   90   CCR2  T1A T1A AM1
+   91   C103  T1A
+   92   C104  T1A T1A T1A T1A T1A C2A
+   93   C105  T1A T1A C2A
+   94   C106  T1A C2A
+   95   C107  C2A C2A T1A 
+   96   C108  C2A C2A C2A C2A C2A T1A 
+   97   C109  C2A
+   98   C110  C2A C2A C2A C2A C2A C3A 
+   99   C111  C2A C2A C3A 
+  100   C112  C2A C3A 
+  101   C113  C2A C3A C3A
+  102   C114  C2A C3A C3A C3A C3A C3A 
+  103   C115  C3A
+  104   C116   
+  105   C117  
+; tail 2
+  106   CGS2  AM1 GM1 
+  107   NAS2  AM2 AM2 AM1 GM1
+  108   HAS2  AM2
+  109   CAS2  AM2
+  110   OAS2  AM2
+  111   C202  AM2 AM2 AM2 AM2 C1B
+  112   C203  AM2 AM2 AM2 C1B C1B
+  113   C204  C1B C1B C1B AM2 AM2
+  114   C205  C1B C1B C1B C1B AM2
+  115   C206  C1B
+  116   C207  C1B C1B C1B C2B
+  117   C208  C1B C2B
+  118   C209  C2B C2B C2B C1B
+  119   C210  C2B
+  120   C211  C2B C2B C2B C2B C3B
+  121   C212  C2B C2B C2B C3B C3B
+  122   C213  C3B C3B C3B C2B C2B 
+  123   C214  C3B C3B C3B C3B C2B
+  124   C215  C3B
+  125   C216  C3B C3B C3B C4B
+  126   C217  C3B C4B
+  127   C218  C4B C4B C4B C3B
+  128   C219  C4B
+  129   C220  
+  130   CGS3  AM1 GM1 GM1
+
+
+; peptide bond
+[ out ]
+p NAS2 CGS1 CGS2 CAS2
+[ chiral ]
+HAS2 NAS2 p CGS2 CGS1 CAS2
+[ out ] 
+CGS2 NAS2 HAS2 CAS2
+[ trans ]
+OAS2 CAS2 NAS2 HAS2
+C202 CAS2 NAS2 CGS2
+
+; trans bond
+[ out ]
+q CCR2 CCR1 C103
+C103 CCR2 q CCR1
+[ trans ]
+CGS1 CCR1 CCR2 C103
+;C103 CCR2 CCR1 CGS1
+C104 C103 CCR2 CCR1
+CGS2 CGS1 CCR1 CCR2
+[ chiral ]
+OGS1 CGS1 CCR1 CGS2
+HGS1 CGS1 CCR1 CGS2
+
+; extend tails
+[ trans ]
+C116 C115 C114 C113
+C117 C116 C115 C114
+C220 C219 C218 C217
+
+
+; Galactose A
+[ assign ]
+xa1 C1A
+xa2 C2A
+xa3 C3A
+xa4 C4A
+xa5 C5A
+xa6 O5A
+
+[ out ]
+O1A  xa1 xa2 xa6
+O2A  xa2 xa3 xa1
+HO2A xa2 xa3 xa1
+O3A  xa3 xa4 xa2
+HO3A xa3 xa4 xa2
+O4A  xa4 xa5 xa3
+HO4A xa4 xa5 xa3
+C6A  xa5 xa6 xa4
+ya6  xa6 xa1 xa5
+
+[ chiral ]
+C1A xa1 O1A xa2 xa6 ; down - O1A equatorial (beta)
+C2A xa2 O2A xa1 xa3 ; up - O2A equatorial
+C3A xa3 O3A xa4 xa2 ; down - O3A equatorial
+C4A xa4 O4A xa3 xa5 ; up
+O4A C4A xa3 xa5     ; - O4A axial (Galactose)
+C5A xa5 C6A xa6 xa4 ; down
+O5A xa6 ya6 xa5 xa1 ; up
+
+[ trans ]
+O6A  C6A C5A C4A
+HO6A C6A C5A C4A
+
+
+; GalNac B
+[ assign ]
+xb1 C1B
+xb2 C2B
+xb3 C3B
+xb4 C4B
+xb5 C5B
+xb6 O5B
+
+[ out ]
+O1B  xb1 xb2 xb6
+NB   xb2 xb1 xb3
+O4B  xb4 xb3 xb5
+HO4B xb4 xb3 xb5
+C6B  xb5 xb4 xb6
+yb6  xb6 xb5 xb1
+
+[ chiral ]
+C1B xb1 O1B xb2 xb6 ; C1B down - O1B equatorial beta
+C2B xb2 NB  xb1 xb3 ; C2B up - NB equatorial
+C3B xb3 O1A xb4 xb2 ; C3B down - O1A equatorial
+C4B xb4 O4B xb3 xb5 ; C4B up 
+O4B xb4 xb3 xb5     ; - O4B axial
+C5B xb5 C6B xb6 xb4 ; C5B down - C6B equatorial
+O5B xb6 yb6 xb5 xb1 ; O5B up
+
+; acetylamide 
+[ trans ] 
+O6B  C6B C5B C4B
+HO6B C6B C5B C4B
+HB   NB  C2B C3B
+[ out ]
+CB NB HB C2B
+[ trans ]
+OB CB NB HB
+[ out ]
+CBB CB OB NB
+
+
+; NANA E - sialic acid
+[ assign ]
+xe1 C1'
+xe2 C2'
+xe3 C3'
+xe4 C4'
+xe5 C5'
+xe6 O5'
+
+[ out ]
+O1'  xe1 xe2 xe5
+ye2  xe2 xe1 xe3
+O3'  xe3 xe2 xe4
+HO3' xe3 xe2 xe4
+N'   xe4 xe3 xe5
+C6'  xe5 xe4 xe6
+ye6  xe6 xe5 xe1
+
+[ chiral ]
+C1' xe1 O1' xe6 xe2 ; up
+C2' xe2 ye2 xe3 xe1 ; down
+C3' xe3 O3' xe2 xe4 ; up
+C4' xe4 N'  xe5 xe3 ; down
+C5' xe5 C6' xe4 xe6 ; up
+O5' xe6 ye6 xe1 xe5 ; down
+; carbonate - axial
+CG'  C1' O5' C2' 
+OD1' C1' O5' C2' 
+OD2' C1' O5' C2' 
+
+; acetylamide
+[ out ]
+H' N' C' C4' ; C' on GM16
+[ trans ]
+O' C' N' H'
+[ out ]
+CB' C' O' N'
+
+; glycerol
+[ trans ]
+C7'  C6' C5' C4'
+O8'  C8' C7' C6'
+HO8' C8' C7' C6'
+[ chiral ]
+O7'  C7' C8' C6'
+HO7' C7' C8' C6'
+O6'  C6' C7' C5'
+HO6' C6' C7' C5'
+
+
+; Galactose C
+[ assign ]
+xc1 C1C
+xc2 C2C
+xc3 C3C
+xc4 C4C
+xc5 C5C
+xc6 O5C
+
+[ out ]
+O1C  xc1 xc2 xc6
+O2C  xc2 xc1 xc3
+HO2C xc2 xc1 xc3
+C6C  xc5 xc6 xc4
+yc6  xc6 xc1 xc5
+
+[ chiral ]
+C1C xc1 O1C xc2 xc6 ; down - O1C equatorial beta
+C2C xc2 O2C xc1 xc3 ; up
+C3C xc3 O1' xc4 xc2 ; down - link with Sialic acid
+C5C xc5 C6C xc6 xc4 ; down
+O5C xc6 yc6 xc5 xc1 ; up
+
+[ assign ]
+z O1B C3C C5C
+[ chiral ]
+C4C z O1B C5C C3C
+
+[ trans ]
+O6C  C6C C5C C4C
+HO6C C6C C5C C4C
+
+
+; Glucose D
+[ assign ]
+xd1 C1D
+xd2 C2D
+xd3 C3D
+xd4 C4D
+xd5 C5D
+xd6 O5D
+
+[ out ] 
+O1D xd1 xd2 xd6
+O2D  xd2 xd1 xd3
+HO2D xd2 xd1 xd3
+O3D  xd3 xd4 xd2
+HO3D xd3 xd4 xd2
+C6D xd5 xd6 xd4
+yd6 xd6 xd1 xd5
+
+[ chiral ]
+C1D xd1 O1D xd2 xd6 ; down - O1D equatorial beta
+C2D xd2 O2D xd1 xd3 ; up
+C3D xd3 O3D xd4 xd2 ; down
+C4D xd4 O1C xd3 xd5 ; up - link with Galactose C
+C5D xd5 C6D xd6 xd4 ; down
+O5D xd6 yd6 xd5 xd1 ; up
+
+[ trans ]
+O6D  C6D C5D C4D
+HO6D C6D C5D C4D
+
+

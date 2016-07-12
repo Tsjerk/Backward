@@ -1,0 +1,134 @@
+; Created by Kri on 11.03.2013
+[ molecule ]
+POPS
+
+[ martini ]
+CNO PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B D3B C4B C5B
+
+;
+; CNO-PO4-GL1-C1B-C2B-D3B-C4B-C5B
+;        |
+;        GL2-C1A-C2A-C3A-C4A
+
+[ mapping ]
+gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7
+
+[ atoms ]
+; Terminal head group (serine)
+    1    H1   CNO
+    2    H2   CNO
+    3    H3   CNO
+    4   NTM   CNO
+    5    CA   CNO CNO CNO PO4
+    6    C6   CNO 
+    7    O7   CNO 
+    8    O8   CNO 
+    9    CB   CNO PO4 
+; Phosphate group 
+   10    OA   PO4 PO4 PO4 CNO
+   11     P   PO4
+   12    OB   PO4
+   13    OC   PO4
+   14    OD   PO4 PO4 GL1
+; Diacylglycerol
+   15    CC   GL1 GL1 PO4
+   16    CD   GL1 
+   17    OE   GL1 GL1 GL1 C1B
+   18   C1A   GL1 C1B
+   19    OF   
+   20   C1B   C1B C1B C1B GL1
+   21   C1C   C1B 
+   22   C1D   C1B C1B C2B
+   23   C1E   C1B C2B 
+   24   C1F   C2B C2B C1B
+   25   C1G   C2B 
+   26   C1H   C2B D3B
+   27   C1I   D3B D3B C2B
+   28   C1J   D3B D3B C4B
+   29   C1K   D3B C4B
+   30   C1L   C4B
+   31   C1M   C4B C4B C4B C5B
+   32   C1N   C4B C4B C5B
+   33   C1O   C5B C4B
+   34   C1P   C5B C5B C4B
+   35   C1Q   C5B C5B C5B C4B
+   36   C1R   C5B
+   37    CE   GL2
+   38    OG   GL2 GL2 GL2 C1A
+   39   C2A   GL2 C1A
+   40    OH   
+   41   C2B   C1A C1A C1A GL2
+   42   C2C   C1A 
+   43   C2D   C1A C1A C1A C2A
+   44   C2E   C1A C2A
+   45   C2F   C2A C2A C2A C1A
+   46   C2G   C2A 
+   47   C2H   C2A C2A C2A C3A
+   48   C2I   C2A C3A 
+   49   C2J   C3A C3A C3A C2A
+   50   C2K   C3A
+   51   C2L   C3A C3A C3A C4A
+   52   C2M   C3A C4A
+   53   C2N   C4A C4A C3A 
+   54   C2O   C4A C4A C4A C3A
+   55   C2P   C4A
+
+;;; head group
+[chiral]
+C6 NTM CE CA
+O7 NTM CE CA
+O8 NTM CE CA
+
+[ cis ]
+;cis double bond
+C1H C1I C1J C1K
+
+; Acyl esters
+; ===========
+; This reconstruction is somewhat complex. Unfortunately
+; the Gromos united atom force field does not have
+; correct dihedrals for acyl esters and these groups
+; have to be built with correct geometry. Only setting
+; the C-O-CO-C dihedrals correct is not sufficient, as
+; the distortions may be so large that the dihedrals
+; are pushed over the barrier. Therefore, the whole
+; glycerol group is rebuilt so as to form a buffer.
+
+; Acyl ester 1
+; ------------
+
+[ chiral ]
+x CD OE CE CC
+
+[ trans ]
+OF C1A CD x
+
+[ out ]
+OE C1A OF C1B
+
+[ trans ]
+C1B C1A OE CD
+
+[ out ]
+OF C1A OE C1B
+
+; Acyl ester 2
+; ------------
+
+[ out ]
+y CE CD OG
+
+[ chiral ]
+z CE OG CD y
+
+[ trans ]
+OH C2A CE z
+
+[ out ]
+OG C2A OH C2B
+
+[ trans ]
+C2B C2A OG CE
+
+[ out ]
+OH C2A OG C2B
