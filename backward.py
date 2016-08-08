@@ -614,6 +614,7 @@ options = [
     ("-solname",  Option(str,           1,        "SOL", "Residue name for solvent molecules")),
     ("-kick",     Option(float,         1,            0, "Random kick added to output atom positions")),
     ("-nopbc",    Option(bool,          0,         None, "Don't try to unbreak residues (like when having large residues in a small box)")),
+    ("-mapdir",   Option(str,           1,         None, "Directory where to look for the mapping files")),
     ]
 
 
@@ -670,7 +671,7 @@ if to_ff == "martini" and not options["-from"]:
     from_ff = "gromos"
 else:
     from_ff     = options["-from"] and options["-from"].value.lower() or "martini"
-mapping     = Mapping.get(source=from_ff,target=to_ff)
+mapping     = Mapping.Mapping(options["-mapdir"].value).get(source=from_ff,target=to_ff)
 backmapping = levels[from_ff] > levels[to_ff]
 reslist     = mapping.keys()
 
