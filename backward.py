@@ -58,21 +58,21 @@ levels = {
 # multiple molecules to a single bead. It seems best to 
 # map idealized configurations onto each bead.
 fourWaters = [
-	("OW",  -0.08,-0.08,-0.08),
-	("HW1", -0.08,-0.01,-0.01),
-        ("HW2", -0.01,-0.01,-0.08),
+    ("OW",  -0.08,-0.08,-0.08),
+    ("HW1", -0.08,-0.01,-0.01),
+    ("HW2", -0.01,-0.01,-0.08),
 
-	("OW",  -0.08, 0.08, 0.08),
-	("HW1", -0.01, 0.08, 0.01),
-        ("HW2", -0.01, 0.01, 0.08),
+    ("OW",  -0.08, 0.08, 0.08),
+    ("HW1", -0.01, 0.08, 0.01),
+    ("HW2", -0.01, 0.01, 0.08),
 
-	("OW",   0.08, 0.08,-0.08),
-	("HW1",  0.08, 0.01,-0.01),
-        ("HW2",  0.14, 0.14,-0.14),
+    ("OW",   0.08, 0.08,-0.08),
+    ("HW1",  0.08, 0.01,-0.01),
+    ("HW2",  0.14, 0.14,-0.14),
 
-	("OW",   0.08,-0.08, 0.08),
-	("HW1",  0.01,-0.08, 0.01),
-        ("HW2",  0.14,-0.14, 0.14),
+    ("OW",   0.08,-0.08, 0.08),
+    ("HW1",  0.01,-0.08, 0.01),
+    ("HW2",  0.14,-0.14, 0.14),
 ]
 
 solvent = {
@@ -361,7 +361,7 @@ class Structure:
         A, B = None, None
         if self.box and not options["-nopbc"]:
             A = zip(*self.box)
-	    try:
+            try:
                 B = m_inv(A)            
                 self.residues = [ unbreak(i,A,B) for i in self.residues ]
             except ZeroDivisionError:
@@ -390,7 +390,7 @@ class Structure:
 
 
         # Maybe we just added an empty list to the backbone, like if the last residue is a C-terminal
-	if backbone and not backbone[-1]:
+        if backbone and not backbone[-1]:
             backbone.pop()
 
 
