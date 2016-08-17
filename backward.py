@@ -58,21 +58,21 @@ levels = {
 # multiple molecules to a single bead. It seems best to 
 # map idealized configurations onto each bead.
 fourWaters = [
-	("OW",  -0.08,-0.08,-0.08),
-	("HW1", -0.08,-0.01,-0.01),
-        ("HW2", -0.01,-0.01,-0.08),
+    ("OW",  -0.08,-0.08,-0.08),
+    ("HW1", -0.08,-0.01,-0.01),
+    ("HW2", -0.01,-0.01,-0.08),
 
-	("OW",  -0.08, 0.08, 0.08),
-	("HW1", -0.01, 0.08, 0.01),
-        ("HW2", -0.01, 0.01, 0.08),
+    ("OW",  -0.08, 0.08, 0.08),
+    ("HW1", -0.01, 0.08, 0.01),
+    ("HW2", -0.01, 0.01, 0.08),
 
-	("OW",   0.08, 0.08,-0.08),
-	("HW1",  0.08, 0.01,-0.01),
-        ("HW2",  0.14, 0.14,-0.14),
+    ("OW",   0.08, 0.08,-0.08),
+    ("HW1",  0.08, 0.01,-0.01),
+    ("HW2",  0.14, 0.14,-0.14),
 
-	("OW",   0.08,-0.08, 0.08),
-	("HW1",  0.01,-0.08, 0.01),
-        ("HW2",  0.14,-0.14, 0.14),
+    ("OW",   0.08,-0.08, 0.08),
+    ("HW1",  0.01,-0.08, 0.01),
+    ("HW2",  0.14,-0.14, 0.14),
 ]
 
 solvent = {
@@ -361,7 +361,7 @@ class Structure:
         A, B = None, None
         if self.box and not options["-nopbc"]:
             A = zip(*self.box)
-	    try:
+            try:
                 B = m_inv(A)            
                 self.residues = [ unbreak(i,A,B) for i in self.residues ]
             except ZeroDivisionError:
@@ -390,7 +390,7 @@ class Structure:
 
 
         # Maybe we just added an empty list to the backbone, like if the last residue is a C-terminal
-	if backbone and not backbone[-1]:
+        if backbone and not backbone[-1]:
             backbone.pop()
 
 
@@ -614,6 +614,7 @@ options = [
     ("-solname",  Option(str,           1,        "SOL", "Residue name for solvent molecules")),
     ("-kick",     Option(float,         1,            0, "Random kick added to output atom positions")),
     ("-nopbc",    Option(bool,          0,         None, "Don't try to unbreak residues (like when having large residues in a small box)")),
+    ("-mapdir",   Option(str,           1,         None, "Directory where to look for the mapping files")),
     ]
 
 
@@ -670,7 +671,7 @@ if to_ff == "martini" and not options["-from"]:
     from_ff = "gromos"
 else:
     from_ff     = options["-from"] and options["-from"].value.lower() or "martini"
-mapping     = Mapping.get(source=from_ff,target=to_ff)
+mapping     = Mapping.Mapping(options["-mapdir"].value).get(source=from_ff,target=to_ff)
 backmapping = levels[from_ff] > levels[to_ff]
 reslist     = mapping.keys()
 

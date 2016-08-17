@@ -501,123 +501,123 @@ _mods = ("chiral","trans","cis","out","assign")
 _tags = _mods + ("molecule","mapping","atoms")
 
 
-def _init():
-    molecules = []
-    mapping   = {}
-    pre       = []
-    cg        = []
-    aa        = []
-    ff        = []
-    mod       = []
-    cur       = []
-    mol       = []
-    tag       = re.compile('^ *\[ *(.*) *\]')
+class Mapping(object):
+    def __init__(self, path=None):
+        if path is None:
+            path = os.path.dirname(__file__)
+        molecules = []
+        mapping   = {}
+        pre       = []
+        cg        = []
+        aa        = []
+        ff        = []
+        mod       = []
+        cur       = []
+        mol       = []
+        tag       = re.compile('^ *\[ *(.*) *\]')
 
-    # Read all .map residue definitions in the module directory
-    for filename in glob.glob(os.path.dirname(__file__)+"/*.map"):
+        # Read all .map residue definitions in the module directory
+        for filename in glob.glob(path + "/*.map"):
 
-        # Default CG model is martini.
-        cg_ff = "martini"
+            # Default CG model is martini.
+            cg_ff = "martini"
 
-        for line in open(filename):
-            
-            # Strip leading and trailing spaces
-            s = line.strip()
+            for line in open(filename):
+                
+                # Strip leading and trailing spaces
+                s = line.strip()
 
-            # Check for directive
-            if s.startswith("["):
+                # Check for directive
+                if s.startswith("["):
 
-                # Extract the directive name
-                cur = re.findall(tag,s)[0].strip().lower()
+                    # Extract the directive name
+                    cur = re.findall(tag,s)[0].strip().lower()
 
-                if not cur in _tags: # cur == "martini":
-                    cg_ff = cur
-                    cg    = []
-                    pre   = []
+                    if not cur in _tags: # cur == "martini":
+                        cg_ff = cur
+                        cg    = []
+                        pre   = []
 
-                # The tag molecule starts a new molecule block
-                # The tag mapping starts a new mapping block for a specific force field
-                # In both cases, we need to purge the stuff that we have so far and
-                # empty the variables, except 'mol'
-                if cur in ("molecule","mapping"):                
-                    # Check whether we have stuff
-                    # If so, we purge
+                    # The tag molecule starts a new molecule block
+                    # The tag mapping starts a new mapping block for a specific force field
+                    # In both cases, we need to purge the stuff that we have so far and
+                    # empty the variables, except 'mol'
+                    if cur in ("molecule","mapping"):                
+                        # Check whether we have stuff
+                        # If so, we purge
 
-                    if aa:
-                        for ffi in ff:
-                            for m in mol:
-                                mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
-                                try:
+                        if aa:
+                            for ffi in ff:
+                                for m in mol:
                                     mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
-                                except:
-                                    print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
-                                try:
-                                    mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,pre=pre,name=m)
-                                except:
-                                    print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
-                        
-                    # Reset lists
-                    aa,ff,mod = [],[],[]
+                                    try:
+                                        mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
+                                    except:
+                                        print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
+                                    try:
+                                        mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,pre=pre,name=m)
+                                    except:
+                                        print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                            
+                        # Reset lists
+                        aa,ff,mod = [],[],[]
 
-                    # Reset molecule name list if we have a molecule tag
-                    if cur == "molecule":
-                        mol = []
+                        # Reset molecule name list if we have a molecule tag
+                        if cur == "molecule":
+                            mol = []
 
-                continue
-       
-            # Remove comments
-            s = s.split(';')[0].strip()
+                    continue
+           
+                # Remove comments
+                s = s.split(';')[0].strip()
 
-            if not s:
-                # Skip empty lines
-                continue
-        
-            elif cur == "molecule":
-                mol.extend(s.split())
-                
-            elif not cur in _tags:  # cur == "martini":
-                # Martini coarse grained beads in topology order
-                cg.extend(s.split()) 
+                if not s:
+                    # Skip empty lines
+                    continue
+            
+                elif cur == "molecule":
+                    mol.extend(s.split())
+                    
+                elif not cur in _tags:  # cur == "martini":
+                    # Martini coarse grained beads in topology order
+                    cg.extend(s.split()) 
 
-            elif cur == "mapping":
-                # Multiple force fields can be specified
-                ff.extend(s.split())
+                elif cur == "mapping":
+                    # Multiple force fields can be specified
+                    ff.extend(s.split())
 
-            elif cur == "atoms":
-                # Atom list for current force field molecule definition 
-                aa.append(s.split())
-                
-            elif cur in _mods: 
-                if aa:
-                    # Definitions of modifying operations
-                    mod.append((cur,s.split()))
-                else:
-                    pre.append((cur,s.split()))
-
-
-    # At the end we may still have rubbish left:
-    if aa:
-        for ffi in ff:
-            for m in mol:
-                try:
-                    mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
-                except:
-                    print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
-                try:
-                    mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
-                except:
-                    print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                elif cur == "atoms":
+                    # Atom list for current force field molecule definition 
+                    aa.append(s.split())
+                    
+                elif cur in _mods: 
+                    if aa:
+                        # Definitions of modifying operations
+                        mod.append((cur,s.split()))
+                    else:
+                        pre.append((cur,s.split()))
 
 
-    return mapping
+        # At the end we may still have rubbish left:
+        if aa:
+            for ffi in ff:
+                for m in mol:
+                    try:
+                        mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
+                    except:
+                        print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
+                    try:
+                        mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
+                    except:
+                        print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+
+        self.mapping = mapping
 
 
-mapping = _init()
-
-
-def get(target="gromos",source="martini"): 
-    D = dict([(i[0],mapping[i]) for i in mapping.keys() if i[1] == source and i[2] == target])
-    print "Residues defined for transformation from %s to %s:"%(source,target)
-    print D.keys()
-    return D
+    def get(self, target="gromos",source="martini"): 
+        mapping = self.mapping
+        D = dict([(i[0],mapping[i]) for i in mapping.keys() if i[1] == source and i[2] == target])
+        print "Residues defined for transformation from %s to %s:"%(source,target)
+        print D.keys()
+        return D
 
