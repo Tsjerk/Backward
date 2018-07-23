@@ -6,7 +6,7 @@ version="150906.13_TAW"
 authors=["Tsjerk A. Wassenaar"]
 
 ##
-
+import numpy as np
 import sys, random, math, re, os, itertools
 import Mapping
 
@@ -279,7 +279,8 @@ def cos_angle(a,b):
 
 def pdbBoxString(b):
     # Box vectors
-    u, v, w  = (b[0],b[3],b[4]), (b[5],b[1],b[6]), (b[7],b[8],b[2])
+    #u, v, w  = (b[0],b[3],b[4]), (b[5],b[1],b[6]), (b[7],b[8],b[2])
+    u, v, w = tuple(b[0]), tuple(b[1]), tuple(b[2])
 
     # Box vector lengths
     nu,nv,nw = [math.sqrt(norm2(i)) for i in (u,v,w)]
@@ -292,12 +293,14 @@ def pdbBoxString(b):
     return pdbBoxLine % (10*norm(u),10*norm(v),10*norm(w),alpha,beta,gamma)
 
 
-def pdbOut(atom,i=1):
-    insc    = atom[2]>>20
-    resi    = atom[2]-(insc<<20)
-    x,y,z   = atom[4:7]
-    pdbline = "ATOM  %5d %4s %4s %1s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f\n"
-    return pdbline%((i,atom[0][:4],atom[1][:4],atom[3],atom[2],10*x,10*y,10*z,1,0)) 
+def pdbOut(a,i=1):
+    insc    = a[2]>>20
+    resi    = a[2]-(insc<<20)
+    x,y,z   = a[4:7]
+    return "{:6s}{:5d} {:^4s}{:1s}{:3s} {:1s}{:4d}{:1s}   {:8.3f}{:8.3f}{:8.3f}{:6.2f}{:6.2f}          {:>2s}{:2s}\n".format(
+            "ATOM", i, a[0], "",  a[1], a[3],a[2],"",     10*x,  10*y,  10*z,  1,     0,               "",   "")
+    # pdbline = "ATOM  %5d %4s %4s %1s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f\n"
+    # return pdbline%((i,atom[0][:4],atom[1][:4],atom[3],atom[2],10*x,10*y,10*z,1,0))
 
 
 def groAtom(a):
@@ -877,13 +880,20 @@ else:
     dev = sys.stdout
 
 # Title
-if backmapping:
-    dev.write("Backmapped structure from MARTINI to %s\n"%options["-to"].value)
-else:
-    dev.write("Mapped structure from %s to MARTINI\n"%options["-from"].value)
+if options["-o"].value.endswith(".gro"):
 
-# Atom count
-dev.write("%5d\n"%len(out))
+    if backmapping:
+        dev.write("Backmapped structure from MARTINI to %s\n"%options["-to"].value)
+    else:
+        dev.write("Mapped structure from %s to MARTINI\n"%options["-from"].value)
+
+    # Atom count
+    dev.write("%5d\n" % len(out))
+
+else:
+    dev.write(pdbBoxString(struc.box))
+
+
 
 u = options["-kick"].value
 
@@ -894,12 +904,19 @@ for atom in out:
     nam,res,id,chn,x,y,z = atom
     if False and res not in solvent_stuff:
         x,y,z = kick(x,u),kick(y,u),kick(z,u)
-    dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
+
+    if options["-o"].value.endswith(".gro"):
+        dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n" % (id % 1e5, res, nam, idx % 1e5, x, y, z))
+    else:
+        #x, y, z = x*10, y*10, z*10
+        atom = (nam,res,id,chn,x,y,z)
+        dev.write(pdbOut(atom, i=idx))
 
     idx += 1
 
 # Box
-dev.write(struc.groBoxString()+"\n")
+if options["-o"].value.endswith(".gro"):
+    dev.write(struc.groBoxString()+"\n")
 
 # Close if we were writing to file
 if options["-o"]:
