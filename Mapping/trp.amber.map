@@ -5,11 +5,11 @@ TRP
 BB SC1 SC2 SC3 SC4
 
 [ mapping ]
-amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+amber
 
 [ atoms ]
     1     N    BB
-    2     H    BB
+    2    HN    BB
     3    CA    BB
     4    HA    BB
     5    CB   SC1 BB
@@ -21,15 +21,15 @@ amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
    11   NE1   SC2 SC1
    12   HE1   SC2
    13   CE2   SC2 SC2 SC3 
-   14   CZ2   SC2 SC2 SC4
-   15   HZ2   SC2 
-   16   CH2   SC4 SC4 SC2 
-   17   HH2   SC4
-   18   CZ3   SC4 SC4 SC3
-   19   HZ3   SC4 
-   20   CE3   SC3 SC3 SC4
-   21   HE3   SC3
-   22   CD2   SC3 SC3 SC2
+   14   CD2   SC3 SC3 SC2
+   15   CE3   SC3 SC3 SC4
+   16   HE3   SC3
+   17   CZ3   SC4 SC4 SC3
+   18   HZ3   SC4 
+   19   CZ2   SC2 SC2 SC4
+   20   HZ2   SC2 
+   21   CH2   SC4 SC4 SC2 
+   22   HH2   SC4
    23     C    BB
    24     O    BB
 
@@ -50,3 +50,6 @@ HH2 CH2 CZ3 CE3
 [ chiral ]
   HA     CA    N    CB    C ; L-Trp
 ; HA     CA    N    C    CB ; D-Trp
+
+
+

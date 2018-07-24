@@ -1,5 +1,4 @@
-; Slipids by Joakim P. M. Jämbeck made for combining with Amber force field
-; in Slipids cholesterol is called CHL1
+; latest revision Kri 12.3.2013
 [ molecule ]
 CHOL
 
@@ -7,116 +6,116 @@ CHOL
 ROH R1 R2 R3 R4 R5 C1 C2
 
 [ mapping ]
-amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+amber
 
 [ atoms ]
-    1    C3   ROH ROH ROH R1
-    2    O3   ROH
-    3    H3'  ROH
-    4    H3   ROH 
-    5    C4   ROH ROH ROH R2
-    6    H4A  ROH ROH ROH R2
-    7    H4B  ROH ROH ROH R2
-    8    C5    R1 ROH ROH R2 R2
-    9    C6    R2 R2 R2 R2 ROH
-   10   H6     R2 R2 R2 R2 ROH
-   11   C7     R2
-   12   H7A    R2
-   13   H7B    R2
-   14   C8     R2 R2 R3 R4
-   15   H8     R2 R2 R3 R4
-   16   C14    R4 R4 R3
-   17   H14    R4
-   18   C15    R4
-   19   H15A   R4
-   20   H15B   R4
-   21   C16    R4 R4 C1
-   22   H16A   R4 R4 C1
-   23   H16B   R4 R4 C1
-   24   C17    R5 R4 C1 C1
-   25   H17    R5 R3 R4 C1 C1
-   26   C13    R5 
-   27   C18    R5
-   28   H18A   R5
-   29   H18B   R5
-   30   H18C   R5
-   31   C12    R3 R3 R3 C1
-   32   H12A   R3 R3 R3 C1
-   33   H12B   R3 R3 R3 C1
-   34   C11    R3 
-   35   H11A   R3
-   36   H11B   R3
-   37   C9     R3 R3 R3 R2 ROH
-   38   H9     R3 R3 R3 R2 ROH
-   39   C10    R1 R1
-   40   C19    R1
-   41   H19A   R1
-   42   H19B   R1
-   43   H19C   R1
-   44   C1     R1
-   45   H1A    R1
-   46   H1B    R1
-   47   C2    ROH
-   48   H2A   ROH
-   49   H2B   ROH
-   50   C20    C1 C1 C1 R4
-   51   H20    C1
-   52   C21    C1
-   53   H21A   C1
-   54   H21B   C1
-   55   H21C   C1
-   56   C22    C1
-   57   H22A   C1
-   58   H22B   C1
-   59   C23    C1 C1 C1 C2
-   60   H23A   C1 C1 C1 C2
-   61   H23B   C1 C1 C1 C2
-   62   C24    C2 C1
-   63   H24A   C2 C1
-   64   H24B   C2 C1
-   65   C25    C2 C2 C2 C1
-   66   H25    C2 C2 C2 C1
-   67   C26    C2
-   68   H26A   C2
-   69   H26B   C2
-   70   H26C   C2
-   71   C27    C2
-   72   H27A   C2
-   73   H27B   C2
-   74   H27C   C2
+    1    C1   ROH ROH ROH R1
+    2    O2   ROH
+    3    H3   ROH
+    4    H4   ROH 
+    5    C5   ROH ROH ROH R2
+    6    H6   ROH ROH ROH R2
+    7    H7   ROH ROH ROH R2
+    8    C8    R1 ROH ROH R2 R2
+    9    C9    R2 R2 R2 R2 ROH
+   10   H10    R2 R2 R2 R2 ROH
+   11   C11    R2
+   12   H12    R2
+   13   H13    R2
+   14   C14    R2 R2 R3 R4
+   15   H15    R2 R2 R3 R4
+   16   C16    R4 R4 R3
+   17   H17    R4
+   18   C18    R4
+   19   H19    R4
+   20   H20    R4
+   21   C21    R4 R4 C1
+   22   H22    R4 R4 C1
+   23   H23    R4 R4 C1
+   24   C24    R5 R4 C1 C1
+   25   H25    R5 R3 R4 C1 C1
+   26   C26    R5 
+   27   C27    R5
+   28   H28    R5
+   29   H29    R5
+   30   H30    R5
+   31   C31    R3 R3 R3 C1
+   32   H32    R3 R3 R3 C1
+   33   H33    R3 R3 R3 C1
+   34   C34    R3 
+   35   H35    R3
+   36   H36    R3
+   37   C37    R3 R3 R3 R2 ROH
+   38   H38    R3 R3 R3 R2 ROH
+   39   C39    R1 R1
+   40   C40    R1
+   41   H41    R1
+   42   H42    R1
+   43   H43    R1
+   44   C44    R1
+   45   H45    R1
+   46   H46    R1
+   47   C47   ROH
+   48   H48   ROH
+   49   H49   ROH
+   50   C50    C1 C1 C1 R4
+   51   H51    C1
+   52   C52    C1
+   53   H53    C1
+   54   H54    C1
+   55   H55    C1
+   56   C56    C1
+   57   H57    C1
+   58   H58    C1
+   59   C59    C1 C1 C1 C2
+   60   H60    C1 C1 C1 C2
+   61   H61    C1 C1 C1 C2
+   62   C62    C2 C1
+   63   H63    C2 C1
+   64   H64    C2 C1
+   65   C65    C2 C2 C2 C1
+   66   H66    C2 C2 C2 C1
+   67   C67    C2
+   68   H68    C2
+   69   H69    C2
+   70   H70    C2
+   71   C71    C2
+   72   H72    C2
+   73   H73    C2
+   74   H74    C2
 
 [chiral]
-H3  C3  C4  O3  C2 
-H8  C8  C7  C14 C9 
-H14 C14 C15 C8  C13
-H9  C9  C10 C11 C8 
-H17 C17 C16 C13 C20
+H4 C1 C5 O2 C47
+H15 C14 C11 C16 C37
+H17 C16 C18 C14 C26
+H38 C37 C39 C34 C14
+H25 C24 C21 C26 C50
+[out]
+C52 C50 C56 C24
+H53 C50 C56 C24
+H54 C50 C56 C24
+H44 C50 C56 C24
+[chiral]
+H51 C50 C24 C52 C56
+
+[chiral]
+C27 C26 C31 C16 C24
+H28 C26 C31 C16 C24
+H29 C26 C31 C16 C24
+H30 C26 C31 C16 C24
 
 [out]
-C21  C20 C22 C17
-H21A C20 C22 C17
-H21B C20 C22 C17
-H21C C20 C22 C17
-[chiral]
-H20 C20 C17 C21 C22
-
-[chiral]
-C18  C13 C12 C14 C17
-H18A C13 C12 C14 C17
-H18B C13 C12 C14 C17
-H18C C13 C12 C14 C17
-
-[out]
-C2  C3 O3 C4
-H2A C3 O3 C4
-H2B C3 O3 C4
+C47 C1 O2 C5
+H48 C1 O2 C5
+H49 C1 O2 C5
 [trans]
-C1  C2 C3 O3
-H1A C2 C3 O3
-H1B C2 C3 O3
+C44 C47 C1 O2
+H45 C47 C1 O2
+H46 C47 C1 O2
 
 [chiral]
-C19  C10 C1 C5 C9 
-H19A C10 C1 C5 C9 
-H19B C10 C1 C5 C9 
-H19C C10 C1 C5 C9 
+C40 C39 C44 C8 C37
+H41 C39 C44 C8 C37
+H42 C39 C44 C8 C37
+H43 C39 C44 C8 C37
+

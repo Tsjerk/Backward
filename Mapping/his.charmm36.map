@@ -1,11 +1,11 @@
 [ molecule ]
-HIS  ;;;; is in fact HSP but if one of hydrogen on a nitrogen is missing in the input topology file, will become HSE or HSD automatically
+HIS  ;;;; is in fact HSP but if one of nitrogen is missing in the input topology file, will become HSE or HSD automatically
 
 [ martini ]
 BB SC1 SC2 SC3
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N    BB
@@ -40,3 +40,4 @@ charmm27 charmm36
 HD1 ND1 CG NE2
 HD2 CD2 CE1 CG
 HE2 NE2 CE1 CD2
+

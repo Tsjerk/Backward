@@ -5,7 +5,7 @@ SER
 BB SC1
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
     1     N    BB
@@ -17,5 +17,3 @@ gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos5
     7     C    BB
     8     O    BB
 
-[ chiral ]
-  CB     CA    N    C

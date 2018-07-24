@@ -6,7 +6,7 @@ POPC
 NC3 PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B D3B C4B C5B
 
 [ mapping ]
-charmm36
+amber
 
 [ atoms ]
     1     N   NC3

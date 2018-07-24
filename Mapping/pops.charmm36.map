@@ -5,7 +5,7 @@ POPS
 CNO PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B D3B C4B C5B
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N   CNO
@@ -21,9 +21,8 @@ charmm27 charmm36
    11  H11A   PO4 CNO
    12  H11B   PO4 CNO
    13     P   PO4
-   14   O13   
-   15   O14   
-   16   O12   
+   14   O13   PO4
+   15   O14   PO4
    17   O11   PO4 PO4 GL1
    18    C1   GL1 GL1 PO4
    19    HA   GL1 GL1 PO4
@@ -168,3 +167,4 @@ H9R C29 C28 C210
 H10R C210 C29 C28
 [ out ]
 C211 C210 C29 H10R
+

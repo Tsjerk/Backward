@@ -2,11 +2,11 @@
 
 ## Mapping from atomistic to coarse grained and vice versa
 
-version="150906.13_TAW"
+version="devel_130709.21_TAW"
 authors=["Tsjerk A. Wassenaar"]
 
 ##
-import numpy as np
+
 import sys, random, math, re, os, itertools
 import Mapping
 
@@ -14,7 +14,7 @@ import Mapping
 
 # Some definitions
 
-AminoAcids    = "ALA CYS ASP GLU PHE GLY HIS ILE LYS LEU MET ASN PRO GLN ARG SER THR VAL TRP TYR ACE NH2".split()
+AminoAcids    = "ALA CYS ASP GLU PHE GLY HIS ILE LYS LEU MET ASN PRO GLN ARG SER THR VAL TRP TYR ACE NH2 LYQ GLQ".split() #EDIT
 protein_stuff = list(AminoAcids)
 
 NucleicAcids  = "C G A T U DC DG DA DT DCYT DGUA DADE DTHY CYT GUA ADE THY URA".split()
@@ -39,18 +39,9 @@ levels = {
     "gromos45a3":  1,
     "gromos53a6":  1,
     "gromos54a7":  1,
-    "alex":        1, # Gromos with adapted lipids
     "charmm":      0,
     "charmm27":    0,
     "charmm36":    0,
-    "amber":       0,
-    "amber94":     0,
-    "amber96":     0,
-    "amber99":     0,
-    "amber99sb":   0,
-    "amber03":     0,
-    "amberGS":     0,
-    "slipids":     0, # Amber with adapted lipids
     }
 
 
@@ -58,37 +49,32 @@ levels = {
 # multiple molecules to a single bead. It seems best to 
 # map idealized configurations onto each bead.
 fourWaters = [
-    ("OW",  -0.08,-0.08,-0.08),
-    ("HW1", -0.08,-0.01,-0.01),
-    ("HW2", -0.01,-0.01,-0.08),
+	("OW",  -0.08,-0.08,-0.08),
+	("HW1", -0.08,-0.01,-0.01),
+        ("HW2", -0.01,-0.01,-0.08),
 
-    ("OW",  -0.08, 0.08, 0.08),
-    ("HW1", -0.01, 0.08, 0.01),
-    ("HW2", -0.01, 0.01, 0.08),
+	("OW",  -0.08, 0.08, 0.08),
+	("HW1", -0.01, 0.08, 0.01),
+        ("HW2", -0.01, 0.01, 0.08),
 
-    ("OW",   0.08, 0.08,-0.08),
-    ("HW1",  0.08, 0.01,-0.01),
-    ("HW2",  0.14, 0.14,-0.14),
+	("OW",   0.08, 0.08,-0.08),
+	("HW1",  0.08, 0.01,-0.01),
+        ("HW2",  0.14, 0.14,-0.14),
 
-    ("OW",   0.08,-0.08, 0.08),
-    ("HW1",  0.01,-0.08, 0.01),
-    ("HW2",  0.14,-0.14, 0.14),
+	("OW",   0.08,-0.08, 0.08),
+	("HW1",  0.01,-0.08, 0.01),
+        ("HW2",  0.14,-0.14, 0.14),
 ]
 
 solvent = {
-    "SOL":   [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0)],
-    "TIP":   [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0)],
-    "TIP3":  [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0)],
-    "TIP3P": [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0)],
-    "TIP4":  [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0),("MW",0,0,0.1)],
-    "TIP4P": [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0),("MW",0,0,0.1)],
-    "W":     fourWaters,
-    "PW":    fourWaters,
-    "ION":   [("ION",0.00,0.00,0.00)] + fourWaters,
-    "CL":    [("CL",0.00,0.00,0.00)] + fourWaters,
-    "CL-":   [("CL",0.00,0.00,0.00)] + fourWaters,
-    "NA":    [("NA",0.00,0.00,0.00)] + fourWaters,
-    "NA+":   [("NA",0.00,0.00,0.00)] + fourWaters,
+    "SOL": [("OW", 0,0,0),("HW1", 0.1,0,0),("HW2", 0,0.1,0)],
+    "W":   fourWaters,
+    "PW":  fourWaters,
+    "ION": [("ION",0.00,0.00,0.00)] + fourWaters,
+    "CL":  [("CL",0.00,0.00,0.00)] + fourWaters,
+    "CL-": [("CL",0.00,0.00,0.00)] + fourWaters,
+    "NA":  [("NA",0.00,0.00,0.00)] + fourWaters,
+    "NA+": [("NA",0.00,0.00,0.00)] + fourWaters,
 }
 
 solvent_stuff = solvent.keys()
@@ -279,8 +265,7 @@ def cos_angle(a,b):
 
 def pdbBoxString(b):
     # Box vectors
-    #u, v, w  = (b[0],b[3],b[4]), (b[5],b[1],b[6]), (b[7],b[8],b[2])
-    u, v, w = tuple(b[0]), tuple(b[1]), tuple(b[2])
+    u, v, w  = (b[0],b[3],b[4]), (b[5],b[1],b[6]), (b[7],b[8],b[2])
 
     # Box vector lengths
     nu,nv,nw = [math.sqrt(norm2(i)) for i in (u,v,w)]
@@ -293,14 +278,12 @@ def pdbBoxString(b):
     return pdbBoxLine % (10*norm(u),10*norm(v),10*norm(w),alpha,beta,gamma)
 
 
-def pdbOut(a,i=1):
-    insc    = a[2]>>20
-    resi    = a[2]-(insc<<20)
-    x,y,z   = a[4:7]
-    return "{:6s}{:5d} {:^4s}{:1s}{:3s} {:1s}{:4d}{:1s}   {:8.3f}{:8.3f}{:8.3f}{:6.2f}{:6.2f}          {:>2s}{:2s}\n".format(
-            "ATOM", i, a[0], "",  a[1], a[3],a[2],"",     10*x,  10*y,  10*z,  1,     0,               "",   "")
-    # pdbline = "ATOM  %5d %4s %4s %1s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f\n"
-    # return pdbline%((i,atom[0][:4],atom[1][:4],atom[3],atom[2],10*x,10*y,10*z,1,0))
+def pdbOut(atom,i=1):
+    insc    = atom[2]>>20
+    resi    = atom[2]-(insc<<20)
+    x,y,z   = atom[4:7]
+    pdbline = "ATOM  %5d %4s %4s %1s%4d    %8.3f%8.3f%8.3f%6.2f%6.2f\n"
+    return pdbline%((i,atom[0][:4],atom[1][:4],atom[3],atom[2],10*x,10*y,10*z,1,0)) 
 
 
 def groAtom(a):
@@ -308,6 +291,7 @@ def groAtom(a):
     #    1PRN      N    1   4.168  11.132   5.291
     ## ===>   atom name,   res name,     res id, chain,       x,          y,          z       
     return (str(a[10:15]), str(a[5:10]),   int(a[:5]), " ", float(a[20:28]),float(a[28:36]),float(a[36:44]))
+
 
 def get_calpha_xyz(r):
     for i in r:
@@ -362,9 +346,9 @@ class Structure:
         # convert to box coordinates and truncate. Convert back to Cartesian
         # coordinates and add to the coordinates of the first atom.
         A, B = None, None
-        if self.box and not options["-nopbc"]:
+        if self.box:
             A = zip(*self.box)
-            try:
+	    try:
                 B = m_inv(A)            
                 self.residues = [ unbreak(i,A,B) for i in self.residues ]
             except ZeroDivisionError:
@@ -393,7 +377,7 @@ class Structure:
 
 
         # Maybe we just added an empty list to the backbone, like if the last residue is a C-terminal
-        if backbone and not backbone[-1]:
+	if backbone and not backbone[-1]:
             backbone.pop()
 
 
@@ -614,10 +598,7 @@ options = [
     ("-strict",   Option(bool,          0,         None, "Use strict format for PDB files")),
     ("-nt",       Option(bool,          0,         None, "Use neutral termini for proteins")),
     ("-sol",      Option(bool,          0,         None, "Write water")),
-    ("-solname",  Option(str,           1,        "SOL", "Residue name for solvent molecules")),
     ("-kick",     Option(float,         1,            0, "Random kick added to output atom positions")),
-    ("-nopbc",    Option(bool,          0,         None, "Don't try to unbreak residues (like when having large residues in a small box)")),
-    ("-mapdir",   Option(str,           1,         None, "Directory where to look for the mapping files")),
     ]
 
 
@@ -674,7 +655,7 @@ if to_ff == "martini" and not options["-from"]:
     from_ff = "gromos"
 else:
     from_ff     = options["-from"] and options["-from"].value.lower() or "martini"
-mapping     = Mapping.Mapping(options["-mapdir"].value).get(source=from_ff,target=to_ff)
+mapping     = Mapping.get(source=from_ff,target=to_ff)
 backmapping = levels[from_ff] > levels[to_ff]
 reslist     = mapping.keys()
 
@@ -716,7 +697,6 @@ cg       = []
 raw      = []
 sol      = []
 ions     = []
-msgs     = []
 for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,struc.cterm):
 
 
@@ -782,7 +762,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
                 # ions if we have those.
                 if not options["-sol"]:
                     break
-                resn = options["-solname"].value
+                resn = "SOL"
                 # Increase the counter if we have an oxygen.
                 # A little hack to keep track of water molecules
                 if atom[0] == "O":
@@ -817,7 +797,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
 
     # Except for solvent, the residue name from a topology 
     # takes precedence over the one from the structure.
-    if top and topres[0][1] in mapping.keys():
+    if target and topres[0][1] in mapping.keys():
         resn = topres[0][1]
 
     
@@ -827,30 +807,13 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
     # residue proper is equal to what we have
     # and the atom lists should be equal
     if not resn in reslist:
-        oldname = resn
         p = set(atoms)
         for i in reslist:
             if i.startswith(resn):
                 if p == set([k for j in mapping[i].map.values() for k in j]):
-                    msg="Residue %s not found. Seems to match %s."%(resn,i)
-                    if not msg in msgs:
-                        print msg
-                        msgs.append(msg)
                     resn = i
                     break
-        if resn == oldname:
-            # Last resort ... Checking for partially matching atom lists
-            for i in reslist:
-                if i.startswith(resn):
-                    keys = mapping[i].map.values()+[mapping[i].prekeys]
-                    if p.issubset(set([k for j in keys for k in j])):
-                        msg="Residue %s not found. Seems to match %s."%(resn,i)
-                        if not msg in msgs:
-                            print msg
-                            msgs.append(msg)
-                        resn = i
-                        break
-        
+
 
     if not resn in mapping.keys():
         # If the residue is still not in the mapping list
@@ -880,20 +843,13 @@ else:
     dev = sys.stdout
 
 # Title
-if options["-o"].value.endswith(".gro"):
-
-    if backmapping:
-        dev.write("Backmapped structure from MARTINI to %s\n"%options["-to"].value)
-    else:
-        dev.write("Mapped structure from %s to MARTINI\n"%options["-from"].value)
-
-    # Atom count
-    dev.write("%5d\n" % len(out))
-
+if backmapping:
+    dev.write("Backmapped structure from MARTINI to %s\n"%options["-to"].value)
 else:
-    dev.write(pdbBoxString(struc.box))
+    dev.write("Mapped structure from %s to MARTINI\n"%options["-from"].value)
 
-
+# Atom count
+dev.write("%5d\n"%len(out))
 
 u = options["-kick"].value
 
@@ -904,19 +860,12 @@ for atom in out:
     nam,res,id,chn,x,y,z = atom
     if False and res not in solvent_stuff:
         x,y,z = kick(x,u),kick(y,u),kick(z,u)
-
-    if options["-o"].value.endswith(".gro"):
-        dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n" % (id % 1e5, res, nam, idx % 1e5, x, y, z))
-    else:
-        #x, y, z = x*10, y*10, z*10
-        atom = (nam,res,id,chn,x,y,z)
-        dev.write(pdbOut(atom, i=idx))
+    dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
 
     idx += 1
 
 # Box
-if options["-o"].value.endswith(".gro"):
-    dev.write(struc.groBoxString()+"\n")
+dev.write(struc.groBoxString()+"\n")
 
 # Close if we were writing to file
 if options["-o"]:
@@ -990,4 +939,3 @@ if options["-n"]:
     ndx.write("[ Protein ]\n"+"\n".join([str(i) for i in ndx_protein])+"\n")
     ndx.write("[ Membrane ]\n"+"\n".join([str(i) for i in ndx_membrane])+"\n")
     ndx.write("[ Solvent ]\n"+"\n".join([str(i) for i in ndx_solvent])+"\n")
-

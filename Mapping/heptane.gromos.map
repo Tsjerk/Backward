@@ -5,7 +5,7 @@ HEP
 C1 C2 
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
     1   C101  C1  
@@ -15,3 +15,4 @@ gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos5
     5   C105  C2  C2 C1   
     6   C106  C2  C2 C2 C2 C2 C1
     7   C107  C2             
+

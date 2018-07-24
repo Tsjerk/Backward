@@ -12,7 +12,7 @@ NC3 PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B D3B C4B C5B
 
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7
+gromos
 
 [ atoms ]
 ; Terminal head group (choline)
@@ -130,3 +130,4 @@ C2B C2A OG CE
 
 [ out ]
 OH C2A OG C2B
+

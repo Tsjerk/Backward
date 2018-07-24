@@ -11,7 +11,7 @@ NH3 PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B D3B C4B C5B
 
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N   NH3
@@ -161,3 +161,4 @@ H91 C29 C28 C210
 H101 C210 C29 C28
 [ out ]
 C211 C210 C29 H101
+

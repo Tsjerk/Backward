@@ -5,11 +5,11 @@ ARG
 BB SC1 SC2
 
 [ mapping ]
-amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+amber
 
 [ atoms ]
     1     N    BB
-    2     H    BB
+    2    HN    BB
     3    CA    BB
     4    HA    BB
     5    CB   SC1  BB BB
@@ -58,3 +58,6 @@ amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
  HH12    NH1   CZ   HH11
  HH21    NH2   CZ   HH22
  HH22    NH2   CZ   HH21
+
+
+

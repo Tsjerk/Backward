@@ -5,7 +5,7 @@ SER
 BB SC1
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N    BB

@@ -5,7 +5,7 @@ GLY
 BB
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N    BB
@@ -15,3 +15,4 @@ charmm27 charmm36
     5   HA2    BB
     9     C    BB
    10     O    BB
+

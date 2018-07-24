@@ -1,8 +1,8 @@
 [ molecule ]
-VAL
+GLQ
 
 [ martini ]
-BB SC1
+BB
 
 [ mapping ]
 gromos
@@ -11,9 +11,6 @@ gromos
     1     N    BB
     2     H    BB
     3    CA    BB
-    4    CB   SC1 BB
-    5   CG1   SC1 
-    6   CG2   SC1
-    7     C    BB
-    8     O    BB
+    4     C    BB
+    5     O    BB
 

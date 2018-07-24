@@ -1,4 +1,4 @@
-; Slipids by Joakim P. M. Jämbeck made for combining with Amber force field
+; latest revision kri 15.3.2013
 [ molecule ]
 POPG
 
@@ -6,7 +6,7 @@ POPG
 GL0 PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B D3B C4B C5B
 
 [ mapping ]
-amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+amber
 
 [ atoms ]
     1   C13   GL0 

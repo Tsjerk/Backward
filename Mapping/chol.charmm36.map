@@ -6,7 +6,7 @@ CHOL
 ROH R1 R2 R3 R4 R5 C1 C2
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1    C1   ROH ROH ROH R1
@@ -118,3 +118,4 @@ C40 C39 C44 C8 C37
 H41 C39 C44 C8 C37
 H42 C39 C44 C8 C37
 H43 C39 C44 C8 C37
+

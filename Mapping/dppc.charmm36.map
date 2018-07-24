@@ -11,7 +11,7 @@ NC3 PO4 GL1 GL2 C1A C2A C3A C4A C1B C2B C3B C4B
 ;         GL2-C1B-C2B-C3B-C4B
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
 ; Terminal head group (choline)
@@ -174,3 +174,4 @@ O22 C21 O21 C22
 C32 C31 O31 C3
 [out]
 O32 C31 O31 C32
+

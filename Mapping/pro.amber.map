@@ -5,21 +5,21 @@ PRO
 BB SC1
 
 [ mapping ]
-amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+amber
 
 [ atoms ]
     1     N    BB
     2    CD   SC1
     3   HD1   SC1
     4   HD2   SC1
-    5    CG   SC1
-    6   HG1   SC1
-    7   HG2   SC1
-    8    CB   SC1 BB
-    9   HB1   SC1 BB
-   10   HB2   SC1 BB
-   11    CA    BB
-   12    HA    BB
+    5    CA    BB
+    6    HA    BB
+    7    CB   SC1 BB
+    8   HB1   SC1 BB
+    9   HB2   SC1 BB
+   10    CG   SC1
+   11   HG1   SC1
+   12   HG2   SC1
    13     C    BB
    14     O    BB
 
@@ -31,3 +31,4 @@ amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
 [ chiral ]
   HA     CA    N    CB    C ; L-Pro
 ; HA     CA    N    C    CB ; D-Pro
+

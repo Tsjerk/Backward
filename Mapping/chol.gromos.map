@@ -5,7 +5,7 @@ CHOL
 ROH R1 R2 R3 R4 R5 C1 C2
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
  1 C1   R1 

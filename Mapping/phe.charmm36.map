@@ -5,7 +5,7 @@ PHE
 BB SC1 SC2 SC3
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N    BB
@@ -58,3 +58,4 @@ HZ    R CE1   P
 CD1 CE1 HE1 R
 CD2 CE2 HE2 R
 CZ  CE1 HE1 P
+

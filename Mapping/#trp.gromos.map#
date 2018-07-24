@@ -1,0 +1,56 @@
+[ molecule ]
+TRP
+
+[ martini ]
+BB SC1 SC2 SC3 SC4
+
+[ mapping ]
+gromos
+
+[ atoms ]
+    1     N    BB
+    2     H    BB
+    3    CA    BB
+    4    CB   SC1 BB
+    5    CG   SC1
+    6   CD1   SC1 SC2 SC3 SC1 SC2 SC3 SC1 SC2 SC1 SC2 SC1 SC2
+    7   HD1   SC1 SC1 SC2
+    8   CD2   SC1 SC1 SC2 SC3 SC4 SC4
+    9   NE1   SC2 SC2 SC3 
+   10   HE1   SC2 SC2 SC1
+   11   CE2   SC2 SC2 SC1 SC3 SC3 SC4 
+   12   CE3   SC4 SC4 SC1
+   13   HE3   SC3
+   14   CZ2   SC3 SC3 SC2
+   15   HZ2   SC3
+   16   CZ3   SC4
+   17   HZ3   SC4 SC4 SC3
+   18   CH2   SC3 SC3 SC4
+   19   HH2   SC3
+   20     C    BB
+   21     O    BB
+
+; Original scheme:
+;[ atoms ]
+;    1     N    BB
+;    2     H    BB
+;    3    CA    BB
+;    4    CB   SC1 BB
+;    5    CG   SC1
+;    6   CD1   SC1 SC2
+;    7   HD1   SC1
+;    8   CD2   SC1 SC1 SC2 SC3 SC4 SC4
+;    9   NE1   SC2 SC2 SC3 
+;   10   HE1   SC2
+;   11   CE2   SC2 SC2 SC1 SC3 SC3 SC4 
+;   12   CE3   SC4 SC4 SC1
+;   13   HE3   SC4
+;   14   CZ2   SC3 SC3 SC2
+;   15   HZ2   SC3
+;   16   CZ3   SC4
+;   17   HZ3   SC4 SC4 SC3
+;   18   CH2   SC3 SC3 SC4
+;   19   HH2   SC3
+;   20     C    BB
+;   21     O    BB
+

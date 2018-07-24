@@ -5,7 +5,7 @@ ARG
 BB SC1 SC2
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos54a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
     1     N    BB
@@ -59,3 +59,5 @@ gromos gromos43a1 gromos43a2 gromos45a3 gromos54a4 gromos53a5 gromos53a6 gromos5
 ;  NH2    CZ    NE    CD
 ;  HH12   NH1   CZ    NE
 ;  HH21   NH2   CZ    NE
+
+

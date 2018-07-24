@@ -5,7 +5,7 @@ AOT
 SO3 GL1 GL2 C1A C2A C1B C2B 
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
 ; Charged head group (sulfonate)
@@ -37,3 +37,4 @@ gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos5
    26   OAO1  SO3         
    27   OAO2  SO3         
    28   OAO3  SO3     
+

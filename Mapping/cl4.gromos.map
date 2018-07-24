@@ -1,11 +1,11 @@
 [ molecule ]
-CL4O
+CL4
 
 [ martini ]
 GL5 PO41 GL1 GL2 C1A C2A D3A C4A C5A C1B C2B D3B C4B C5B PO42 GL3 GL4 C1A2 C2A2 D3A2 C4A2 C5A2 C1B2 C2B2 D3B2 C4B2 C5B2
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
     1  CGS1   GL2 GL2 GL1 
@@ -109,3 +109,4 @@ gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos5
    99  C417  C5A2 C5A2 C5A2 C4A2
   100  C418  C5A2
   101  CGS6   GL3 GL3 PO42
+

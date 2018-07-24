@@ -1,8 +1,7 @@
 
 import glob,os,re,math,sys,random
 
-# Should version this... 140813-16 TAW
-# More flexible handling of residue/molecule names
+# Should version this... 130502-11 TAW
 # More extensive support for geometric operations
 
 
@@ -26,8 +25,8 @@ _normfac = 0.125
 _aminoacids = [
     "ALA", "CYS", "ASP", "GLU", "PHE", "GLY", "HIS", "ILE", "LYS", "LEU",
     "MET", "ASN", "PRO", "GLN", "ARG", "SER", "THR", "VAL", "TRP", "TYR",
-    "ACE", "NH2",
-    ]
+    "ACE", "NH2", "LYQ", "GLQ",
+    ] # EDIT: AS for iso-pep bond
 
 
 # Determine average position for a set of atoms
@@ -64,169 +63,8 @@ def _r(a,kick):
     return a+random.random()*kick-kick/2
 
 
-def _assign(a,s,coord):
-    # Get coordinates
-    s = [ coord.get(j,-1) for j in s ]
-
-    if min(s) > -1:
-        return tuple([sum(i)/len(s) for i in zip(*s)])
-    else:
-        return None
-
-
-def _trans(a,s,coord):
-    #
-    #  a              a--
-    #   \                 \  
-    #    b--c       or     b--c--d
-    #        \                 \  \  
-    #         d                 e--(e+d-2c)
-    #
-    # a = b + c - d
-
-    # Get coordinates for the other atoms
-    s = [ coord.get(j,-1) for j in s ]
-
-    # Connecting particle
-    b = s.pop(0)
-
-    if min(s) > -1:
-        # Subtract the third position from the fourth and so on, and sum the vectors
-        u = _normalize([sum(k) for k in zip(*[ _normalize(_vsub(j,s[0])) for j in s[1:] ])])
-        
-        # Get the new position
-        return b[0]-_normfac*u[0], b[1]-_normfac*u[1], b[2]-_normfac*u[2]
-
-def _cis(a,s,coord):
-    #
-    #    b--c
-    #   /    \  
-    #  a      d
-    #
-    # a = 2b - 2c + d
-    
-    # The 'cis' definition is also a line of atom names
-    # Here the length should be four, always: a b c d
-    # The difference with trans dihedrals is in the equation below
-    try:                
-        b,c,d = s
-    except ValueError:
-        print "Invalid trans bond definition in residue %s (%s). Ignoring."%(out[0][1],i)
-        return
-
-    # Source coordinates
-    b = coord.get(b)
-    c = coord.get(c)
-    d = coord.get(d)
-
-    if b == None or c == None or d == None:
-        return None
-
-    try:
-        u = _normalize(_vsub(c,d))
-        v = _normalize(_vsub(b,c))
-        return b[0]+_normfac*(v[0]-u[0]), b[1]+_normfac*(v[1]-u[1]), b[2]+_normfac*(v[2]-u[2])
-    except ZeroDivisionError:
-        return 2*b[0]-2*c[0]+d[0],   2*b[1]-2*c[1]+d[1],   2*b[2]-2*c[2]+d[2]
-
-
-def _out(a,s,coord):
-    # Place a on the negative resultant vector 
-    # 
-    #       a
-    #      /
-    #  c--b
-    #      \  
-    #       d
-    #
-    # a = 3b - c - d
-    #
-    
-    # The 'out' definition is also a line of atom names
-    # But the length can be variable
-    
-    # Get coordinates for the other atoms
-    s = [ coord.get(j,-1) for j in s ]
-
-    if min(s) > -1:
-        # Subtract the center from the other atoms and sum the vectors
-        u = _normalize([sum(k) for k in zip(*[ _normalize(_vsub(j,s[0])) for j in s[1:] ])])
-        
-        # Get the new position
-        return s[0][0]-_normfac*u[0], s[0][1]-_normfac*u[1], s[0][2]-_normfac*u[2]
-
-    return None
-                
-
-def _chiral(a,s,coord):
-    # The 'chiral' definition is a list of atom names
-    
-    # Get coordinates for the other atoms; the first atom in this list is the chiral center
-    s = [ coord.get(j,-1) for j in s ]
-
-    if min(s) > -1:
-        # Subtract the center from the other atoms
-        u = [ _vsub(j,s[0]) for j in s[1:] ]
-
-        # If there are multiple substituents given for a chiral center, determine the 
-        # average cross-product. Otherwise, use a more elaborate scheme for rebuilding.
-        if len(u) > 2:
-
-            # Get the resultant crossproduct normalized
-            c = _normalize([sum(m) for m in zip(*[ _crossprod(j,k) for j,k in zip([u[-1]]+u,u) ])])
-            
-            # Set the new coordinates
-            # Ai, magic number here! Where does the 0.1 come from? 
-            return s[0][0]+_normfac*c[0], s[0][1]+_normfac*c[1], s[0][2]+_normfac*c[2]
-            
-        else:
-            #          
-            #  a   .
-            #   \ .
-            #    b--d
-            #   / 
-            #  c   
-            #        Like for CB/HA: 
-            #           CB CA N C
-            #           HA CA C N
-            #        Or (safer):
-            #           CB CA N C
-            #           HA CA C N CB 
-            #
-
-
-            # Unpack vectors
-            c, d  = u
-
-            # Midpoint; a vector from the center b
-            p     = [ .05*i for i in _normalize(_vadd(c,d)) ]
-
-            # Vector c-p
-            q     = [ .05*i for i in _normalize(_vsub(c,d)) ]
-                      
-            # The vector in the direction of the target particle
-            try:
-                w   = [ _normfac*j for j in _normalize(_crossprod(q,p)) ]
-            except ZeroDivisionError:
-                trm = nterm and ", N-terminus" or (cterm and ", C-terminus" or "")
-                print "Chirality of %s (%s%s) for placing %s undefined by atoms %s. Skipping modification."%(i[1],resn,trm,i[0],repr(i[2:]))
-                return None
-    
-            # The coordinates
-            return s[0][0]+w[0]-p[0], s[0][1]+w[1]-p[1], s[0][2]+w[2]-p[2]
-
-
-_do = {
-    "assign": _assign,
-    "trans":  _trans,
-    "cis":    _cis,
-    "chiral": _chiral,
-    "out":    _out,
-}
-
-
 class ResidueMap:
-    def __init__(self,target=None,source=None,atoms=None,mod=[],pre=[],name=""):
+    def __init__(self,target=None,source=None,atoms=None,mod=[],name=""):
 
         if atoms:
             # Setting mapping from an atom list
@@ -243,7 +81,6 @@ class ResidueMap:
 
         if source:
             y = source
-
 
         if target:
 
@@ -273,9 +110,7 @@ class ResidueMap:
             self.map   = dict(zip(x,y))
 
         # Special cases
-        self.pre     = pre
-        self.prekeys = [i[1][0] for i in pre] # tag (atom0 atom1 .. atomN)
-        self.mod     = mod
+        self.mod    = mod
 
 
     def do(self, residue, target=None, coords=False, nterm=False, cterm=False, nt=False, kick=0.05):
@@ -320,26 +155,16 @@ class ResidueMap:
         # Atoms we have; the source dictionary
         atoms = [ i[0].strip() for i in residue ]
         have  = dict(zip(atoms, residue))
-        xyz   = dict(zip(atoms, [i[4:7] for i in residue]))
-        if coords:
-            xyz.update(coords)
 
-        # Update the 'have' list according to the pre-mods
-        for tag, i in self.pre:
-            xyz[i[0]] = _do[tag](i[0],i[1:],xyz) or xyz.get(i[0])
-            #if not have[i[0]]:
-            #    print "Not all positions defined for preassigning [%s] in residue %s:" % (tag,resn),
-            #    print [(j,have.get(j)) for j in i]
-        for i,(p,q,r) in xyz.items():
-            if not i in have:
-                have[i] = ('*',None,None,None,p,q,r)
 
         # Set array for output; residue to return
         out = []
 
+
         # The target list is leading. Make sure that the atom list matches.
         # So, the actual atom list is built from the target list:
         atomlist = [i for i in target if i in self.atoms]                 
+
 
         # Go over the target particles; the particles we want
         # If we have a target topology, then there may be 
@@ -348,20 +173,24 @@ class ResidueMap:
         # from the want list.
         for want in atomlist:
 
+
             # If we have a target list, the atom will be in
             # (it would have been skipped otherwise), and we
             # can read up to the next we want. 
-            #got = xyz.get(want, _average([ have.get(i) for i in self.map[want] ]))                
-            got = _average([ have.get(i) for i in self.map[want] ])                
-
+            if coords:
+                got = coords.get(want, _average([ have.get(i) for i in self.map[want] ]))                
+            else:
+                got = _average([ have.get(i) for i in self.map[want] ])
+            
             if not got:
                 print "Problem determining mapping coordinates for atom %s of residue %s."%(target[0],resn)
                 print "atomlist:", atomlist
                 print "want:", want, self.map[want]
-                print "have:", xyz.keys()            
+                print "have:", have.keys()            
                 print "Bailing out..."
                 print target
                 sys.exit(1)
+
 
             # This logic reads the atom we want together with all atoms 
             # that are in the target list, but not in the residue 
@@ -369,6 +198,7 @@ class ResidueMap:
             # that is in that definition.
             while target and (target[0] == want or target[0] not in self.atoms):
                 name = target.pop(0)
+
                 out.append((name,resn,resi,chain,got[0],got[1],got[2]))                
    
                 # If we have a target list given as argument to the function
@@ -376,6 +206,7 @@ class ResidueMap:
                 # Otherwise, the N-terminal/C-terminal additions are made 
                 # right after the (N)H/(C)O, if nterm/cterm are set
                 if resn in _aminoacids and set_termini:
+
 
                     # If this is an N-terminal amino acid, we may have
                     # to add one or two hydrogens.
@@ -412,13 +243,16 @@ class ResidueMap:
                     x,y,z  = out[i][4:7]
                     out[i] = out[i][:4]+(_r(x,kick),_r(y,kick),_r(z,kick))
 
+
         # Create a lookup dictionary
         atoms = dict(zip([i[0] for i in out],range(len(out))))
+
 
         # Create a coordinate dictionary
         # This allows adding dummy particles for increasingly complex operations
         coord = dict([(i[0],(_r(i[4],1e-5),_r(i[5],1e-5),_r(i[6],1e-5))) for i in out])
 
+        
         # Correct terminal amino acid N/C positions, to increase stability of 
         # subsequent corrections.
         if resn in _aminoacids and nterm:
@@ -462,23 +296,239 @@ class ResidueMap:
                 coord["C"] = (b[0]+u[0]/2+.866*l*v[0],b[1]+u[1]/2+.866*l*v[1],b[2]+u[2]/2+.866*l*v[2])             
                 out[t]     = out[t][:4] + coord["C"]
 
+
         # Before making modifications, save the raw projection results
         raw = [i for i in out]
 
+
         # Treat special cases: coordinate modifying operations
-        for tag,i in self.mod:            
-            print tag, i
-            coord[i[0]] = _do[tag](i[0],i[1:],coord)
-            if not coord[i[0]] and i[0] in atomlist:
-                print "Not all positions defined for [%s] in residue %s:" % (tag,resn),
-                print i[0], i[1:], coord.keys()
+        for tag,i in self.mod:
+            
+            if tag == "trans":    
 
-            # Index of target atom, if in the list
-            t = atoms.get(i[0])
+                #
+                #  a              a--
+                #   \                 \
+                #    b--c       or     b--c--d
+                #        \                 \  \
+                #         d                 e--(e+d-2c)
+                #
+                # a = b + c - d
 
-            # Set the coordinates in the output if this is a real particle
-            if t:
-                out[t] = out[t][:4] + coord[i[0]]
+                # Target particle
+                a = i[0]
+
+                # Get coordinates for the other atoms
+                s = [ coord.get(j,-1) for j in i[1:] ]
+
+                # Connecting particle
+                b = s.pop(0)
+
+                if min(s) > -1:
+                    # Subtract the third position from the fourth and so on, and sum the vectors
+                    u = _normalize([sum(k) for k in zip(*[ _normalize(_vsub(j,s[0])) for j in s[1:] ])])
+
+                    # Get the new position
+                    x,y,z = b[0]-_normfac*u[0], b[1]-_normfac*u[1], b[2]-_normfac*u[2]
+
+                    # Index of target atom, if in the list
+                    t = atoms.get(a)
+
+                    # Set the coordinates in the output if this is a real particle
+                    if t != None:
+                        out[t] = out[t][:4] + (x,y,z)
+
+                    # Add coordinates to dictionary
+                    coord[a] = (x,y,z)
+                else:
+                    print "Not all positions defined for [trans] operation:"
+                    print [(j,coord.get(j)) for j in i]
+                    
+
+                # The 'trans' definition is also a line of atom names
+                # Here the length should be four, always: a b c d
+                #try:                
+                #    a,b,c,d = i
+                #except ValueError:
+                #    print "Invalid trans bond definition in residue %s (%s). Ignoring."%(out[0][1],i)
+                #    continue
+
+                # Source coordinates
+                #b = coord.get(b)
+                #c = coord.get(c)
+                #d = coord.get(d)
+
+                #if b != None and c != None and d != None:
+                #    # Vector c-d normalized
+                #    u = [_normfac*j for j in _normalize(_vsub(c,d))]
+ 
+                #    # New coordinates for a
+                #    x,y,z = b[0]+u[0], b[1]+u[1], b[2]+u[2]
+
+                #    # Index of target atom, if in the list
+                #    t = atoms.get(a) 
+
+                #    # Set the coordinates in the output if this is a real particle
+                #    if t != None:
+                #        out[t] = out[t][:4] + (x,y,z)
+
+                #    # Add coordinates to dictionary
+                #    coord[a] = (x,y,z)
+
+
+            elif tag == "cis":    
+
+                #
+                #    b--c
+                #   /    \
+                #  a      d
+                #
+                # a = 2b - 2c + d
+
+                # The 'cis' definition is also a line of atom names
+                # Here the length should be four, always: a b c d
+                # The difference with trans dihedrals is in the equation below
+                try:                
+                    a,b,c,d = i
+                except ValueError:
+                    print "Invalid trans bond definition in residue %s (%s). Ignoring."%(out[0][1],i)
+                    continue
+
+                # Source coordinates
+                b = coord.get(b)
+                c = coord.get(c)
+                d = coord.get(d)
+
+                if b != None and c != None and d != None:
+                    try:
+                        u = _normalize(_vsub(c,d))
+                        v = _normalize(_vsub(b,c))
+                        x,y,z = b[0]+_normfac*(v[0]-u[0]), b[1]+_normfac*(v[1]-u[1]), b[2]+_normfac*(v[2]-u[2])
+                    except ZeroDivisionError:
+                        x,y,z = 2*b[0]-2*c[0]+d[0],   2*b[1]-2*c[1]+d[1],   2*b[2]-2*c[2]+d[2]
+
+                    # Index of target atom, if in the list
+                    t = atoms.get(a) 
+
+                    # Set the coordinates in the output if this is a real particle
+                    if t != None:
+                        out[t] = out[t][:4] + (x,y,z)
+
+                    # Add coordinates to dictionary
+                    coord[a] = (x,y,z)
+
+
+            elif tag == "out":
+
+                # Place a on the negative resultant vector 
+                # 
+                #       a
+                #      /
+                #  c--b
+                #      \
+                #       d
+                #
+                # a = 3b - c - d
+                #
+
+                # The 'out' definition is also a line of atom names
+                # But the length can be variable
+
+                # Target particle
+                a = i[0]
+
+                # Get coordinates for the other atoms
+                s = [ coord.get(j,-1) for j in i[1:] ]
+
+                if min(s) > -1:
+                    # Subtract the center from the other atoms and sum the vectors
+                    u = _normalize([sum(k) for k in zip(*[ _normalize(_vsub(j,s[0])) for j in s[1:] ])])
+
+                    # Get the new position
+                    x,y,z = s[0][0]-_normfac*u[0], s[0][1]-_normfac*u[1], s[0][2]-_normfac*u[2]
+
+                    # Index of target atom, if in the list
+                    t = atoms.get(a) 
+
+                    # Set the coordinates in the output if this is a real particle
+                    if t != None:
+                        out[t] = out[t][:4] + (x,y,z)
+
+                    # Add coordinates to dictionary
+                    coord[a] = (x,y,z)
+                
+
+            elif tag == "chiral":
+
+                # The 'chiral' definition is a list of atom names
+
+                # Target atom
+                a = i[0]
+
+                # Get coordinates for the other atoms; the first atom in this list is the chiral center
+                s = [ coord.get(j,-1) for j in i[1:] ]
+
+                if min(s) > -1:
+                    # Subtract the center from the other atoms
+                    u = [ _vsub(j,s[0]) for j in s[1:] ]
+
+                    # If there are multiple substituents given for a chiral center, determine the 
+                    # average cross-product. Otherwise, use a more elaborate scheme for rebuilding.
+                    if len(u) > 2:
+
+                        # Get the resultant crossproduct normalized
+                        c = _normalize([sum(m) for m in zip(*[ _crossprod(j,k) for j,k in zip([u[-1]]+u,u) ])])
+    
+                        # Set the new coordinates
+                        # Ai, magic number here! Where does the 0.1 come from? 
+                        x,y,z = s[0][0]+_normfac*c[0], s[0][1]+_normfac*c[1], s[0][2]+_normfac*c[2]
+
+                    else:
+                        #          
+                        #  a   .
+                        #   \ .
+                        #    b--d
+                        #   / 
+                        #  c   
+                        #        Like for CB/HA: 
+                        #           CB CA N C
+                        #           HA CA C N
+                        #        Or (safer):
+                        #           CB CA N C
+                        #           HA CA C N CB 
+                        #
+
+
+                        # Unpack vectors
+                        c, d  = u
+
+                        # Midpoint; a vector from the center b
+                        p     = [ .05*i for i in _normalize(_vadd(c,d)) ]
+
+                        # Vector c-p
+                        q     = [ .05*i for i in _normalize(_vsub(c,d)) ]
+                      
+                        # The vector in the direction of the target particle
+                        try:
+                            w   = [ _normfac*j for j in _normalize(_crossprod(q,p)) ]
+                        except ZeroDivisionError:
+                            trm = nterm and ", N-terminus" or (cterm and ", C-terminus" or "")
+                            print "Chirality of %s (%s%s) for placing %s undefined by atoms %s. Skipping modification."%(i[1],resn,trm,i[0],repr(i[2:]))
+                            continue
+    
+                        # The coordinates
+                        x,y,z = s[0][0]+w[0]-p[0], s[0][1]+w[1]-p[1], s[0][2]+w[2]-p[2]
+
+                    # Index of target atom, if in the list
+                    t = atoms.get(a)
+
+                    # Set the coordinates in the output if this is a real particle
+                    if t != None:
+                        out[t] = out[t][:4] + (x,y,z)
+
+                    # Add coordinates to dictionary
+                    coord[a] = (x,y,z)
+
 
         # Now add a random kick again whenever needed to ensure that no atoms overlap
         for i in range(len(out)):
@@ -493,7 +543,7 @@ class ResidueMap:
 
 # These are the modifier tags. They signify a specific 
 # operation on the atoms listed.
-_mods = ("chiral","trans","cis","out","assign")
+_mods = ("chiral","trans","cis","out")
 
 
 # These are the default tags. Other tags should be 
@@ -501,123 +551,116 @@ _mods = ("chiral","trans","cis","out","assign")
 _tags = _mods + ("molecule","mapping","atoms")
 
 
-class Mapping(object):
-    def __init__(self, path=None):
-        if path is None:
-            path = os.path.dirname(__file__)
-        molecules = []
-        mapping   = {}
-        pre       = []
-        cg        = []
-        aa        = []
-        ff        = []
-        mod       = []
-        cur       = []
-        mol       = []
-        tag       = re.compile('^ *\[ *(.*) *\]')
+def _init():
+    molecules = []
+    mapping   = {}
+    cg        = []
+    aa        = []
+    ff        = []
+    mod       = []
+    cur       = []
+    mol       = []
+    tag       = re.compile('^ *\[ *(.*) *\]')
 
-        # Read all .map residue definitions in the module directory
-        for filename in glob.glob(path + "/*.map"):
+    # Read all .map residue definitions in the module directory
+    for filename in glob.glob(os.path.dirname(__file__)+"/*.map"):
 
-            # Default CG model is martini.
-            cg_ff = "martini"
+        # Default CG model is martini.
+        cg_ff = "martini"
 
-            for line in open(filename):
-                
-                # Strip leading and trailing spaces
-                s = line.strip()
-
-                # Check for directive
-                if s.startswith("["):
-
-                    # Extract the directive name
-                    cur = re.findall(tag,s)[0].strip().lower()
-
-                    if not cur in _tags: # cur == "martini":
-                        cg_ff = cur
-                        cg    = []
-                        pre   = []
-
-                    # The tag molecule starts a new molecule block
-                    # The tag mapping starts a new mapping block for a specific force field
-                    # In both cases, we need to purge the stuff that we have so far and
-                    # empty the variables, except 'mol'
-                    if cur in ("molecule","mapping"):                
-                        # Check whether we have stuff
-                        # If so, we purge
-
-                        if aa:
-                            for ffi in ff:
-                                for m in mol:
-                                    mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
-                                    try:
-                                        mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
-                                    except:
-                                        print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
-                                    try:
-                                        mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,pre=pre,name=m)
-                                    except:
-                                        print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
-                            
-                        # Reset lists
-                        aa,ff,mod = [],[],[]
-
-                        # Reset molecule name list if we have a molecule tag
-                        if cur == "molecule":
-                            mol = []
-
-                    continue
-           
-                # Remove comments
-                s = s.split(';')[0].strip()
-
-                if not s:
-                    # Skip empty lines
-                    continue
+        for line in open(filename):
             
-                elif cur == "molecule":
-                    mol.extend(s.split())
-                    
-                elif not cur in _tags:  # cur == "martini":
-                    # Martini coarse grained beads in topology order
-                    cg.extend(s.split()) 
+            # Strip leading and trailing spaces
+            s = line.strip()
 
-                elif cur == "mapping":
-                    # Multiple force fields can be specified
-                    ff.extend(s.split())
+            # Check for directive
+            if s.startswith("["):
 
-                elif cur == "atoms":
-                    # Atom list for current force field molecule definition 
-                    aa.append(s.split())
-                    
-                elif cur in _mods: 
+                # Extract the directive name
+                cur = re.findall(tag,s)[0].strip().lower()
+
+                if not cur in _tags: # cur == "martini":
+                    cg_ff = cur
+                    cg    = []
+
+                # The tag molecule starts a new molecule block
+                # The tag mapping starts a new mapping block for a specific force field
+                # In both cases, we need to purge the stuff that we have so far and
+                # empty the variables, except 'mol'
+                if cur in ("molecule","mapping"):                
+                    # Check whether we have stuff
+                    # If so, we purge
                     if aa:
-                        # Definitions of modifying operations
-                        mod.append((cur,s.split()))
-                    else:
-                        pre.append((cur,s.split()))
+                        for ffi in ff:
+                            for m in mol:
+                                try:
+                                    mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
+                                except:
+                                    print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
+                                try:
+                                    mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
+                                except:
+                                    print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                        
+                    # Reset lists
+                    aa,ff,mod = [],[],[]
+
+                    # Reset molecule name list if we have a molecule tag
+                    if cur == "molecule":
+                        mol = []
+
+                continue
+       
+            # Remove comments
+            s = s.split(';')[0].strip()
+
+            if not s:
+                # Skip empty lines
+                continue
+        
+            elif cur == "molecule":
+                mol.extend(s.split())
+                
+            elif not cur in _tags:  # cur == "martini":
+                # Martini coarse grained beads in topology order
+                cg.extend(s.split()) 
+
+            elif cur == "mapping":
+                # Multiple force fields can be specified
+                ff.extend(s.split())
+
+            elif cur == "atoms":
+                # Atom list for current force field molecule definition 
+                aa.append(s.split())
+                
+            elif cur in _mods: 
+                # Definitions of modifying operations
+                mod.append((cur,s.split()))
 
 
-        # At the end we may still have rubbish left:
-        if aa:
-            for ffi in ff:
-                for m in mol:
-                    try:
-                        mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
-                    except:
-                        print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
-                    try:
-                        mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
-                    except:
-                        print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
-
-        self.mapping = mapping
+    # At the end we may still have rubbish left:
+    if aa:
+        for ffi in ff:
+            for m in mol:
+                try:
+                    mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
+                except:
+                    print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
+                try:
+                    mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
+                except:
+                    print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
 
 
-    def get(self, target="gromos",source="martini"): 
-        mapping = self.mapping
-        D = dict([(i[0],mapping[i]) for i in mapping.keys() if i[1] == source and i[2] == target])
-        print "Residues defined for transformation from %s to %s:"%(source,target)
-        print D.keys()
-        return D
+    return mapping
+
+
+mapping = _init()
+
+
+def get(target="gromos",source="martini"): 
+    D = dict([(i[0],mapping[i]) for i in mapping.keys() if i[1] == source and i[2] == target])
+    print "Residues defined for transformation from %s to %s:"%(source,target)
+    print D.keys()
+    return D
 

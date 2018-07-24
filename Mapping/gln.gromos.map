@@ -5,7 +5,7 @@ GLN
 BB SC1
 
 [ mapping ]
-gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos54a7 alex
+gromos
 
 [ atoms ]
     1     N    BB
@@ -20,13 +20,4 @@ gromos gromos43a1 gromos43a2 gromos45a3 gromos45a4 gromos53a5 gromos53a6 gromos5
    10  HE22   SC1
    11     C    BB
    12     O    BB
-
-[ chiral ]
-  CB     CA    N    C
-
-[ out ]
- NE2 CD OE1 CG
-HE21 CD OE1 CG
-HE22 CD OE1 CG
- OE1 CD NE2 CG
 

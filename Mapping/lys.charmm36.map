@@ -5,7 +5,7 @@ LYS
 BB SC1 SC2
 
 [ mapping ]
-charmm27 charmm36
+charmm36
 
 [ atoms ]
     1     N    BB
@@ -39,3 +39,4 @@ charmm27 charmm36
 [ chiral ]
   HA     CA    N    CB    C ; L-Lys
 ; HA     CA    N    C    CB ; D-Lys
+

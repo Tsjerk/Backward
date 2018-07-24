@@ -5,11 +5,11 @@ PHE
 BB SC1 SC2 SC3
 
 [ mapping ]
-amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
+amber
 
 [ atoms ]
     1     N    BB
-    2     H    BB
+    2    HN    BB
     3    CA    BB
     4    HA    BB
     5    CB   SC1 BB
@@ -22,10 +22,10 @@ amber amber94 amber96 amber99 amber99sb amber03 amberGS slipids
    12   HE1   SC3
    13    CZ   SC3 SC2
    14    HZ   SC3
-   15   CE2   SC2
-   16   HE2   SC2
-   17   CD2   SC2 SC1
-   18   HD2   SC2 
+   15   CD2   SC2 SC1
+   16   HD2   SC2 
+   17   CE2   SC2
+   18   HE2   SC2
    19     C    BB
    20     O    BB
 
@@ -58,3 +58,4 @@ HZ    R CE1   P
 CD1 CE1 HE1 R
 CD2 CE2 HE2 R
 CZ  CE1 HE1 P
+
