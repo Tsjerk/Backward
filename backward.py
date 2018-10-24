@@ -51,6 +51,8 @@ levels = {
     "amber03":     0,
     "amberGS":     0,
     "slipids":     0, # Amber with adapted lipids
+    "opls":        0,
+    "opls-aa":     0,
     }
 
 
