@@ -471,7 +471,7 @@ class ResidueMap:
 
         # Treat special cases: coordinate modifying operations
         for tag,i in self.mod:            
-            print tag, i
+            #print tag, i
             coord[i[0]] = _do[tag](i[0],i[1:],coord)
             if not coord[i[0]] and i[0] in atomlist:
                 print "Not all positions defined for [%s] in residue %s:" % (tag,resn),
