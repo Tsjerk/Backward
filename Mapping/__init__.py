@@ -351,8 +351,11 @@ class ResidueMap:
             # If we have a target list, the atom will be in
             # (it would have been skipped otherwise), and we
             # can read up to the next we want. 
-            #got = xyz.get(want, _average([ have.get(i) for i in self.map[want] ]))                
-            got = _average([ have.get(i) for i in self.map[want] ])                
+            #got = xyz.get(want, _average([ have.get(i) for i in self.map[want] ]))
+            if coords and want in coords.keys():
+                got = coords[want]
+            else:
+                got = _average([ have.get(i) for i in self.map[want] ])                
 
             if not got:
                 print "Problem determining mapping coordinates for atom %s of residue %s."%(target[0],resn)
