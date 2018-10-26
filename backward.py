@@ -176,6 +176,34 @@ def write_ndx(filename, atoms, protein, solvent):
     return
 
 
+def write_gro(filename, title, atoms, box, size):
+    if filename:
+        dev = open(filename,"w")
+    else:
+        dev = sys.stdout
+    dev.write(title)
+
+    # Atom count
+    dev.write("%5d\n"%len(atoms))
+
+
+    # Atoms
+    idx = 1
+    for atom in atoms:
+        # Regular atom
+        nam,res,id,chn,x,y,z = atom
+        if False and res not in solvent_stuff:
+            x,y,z = kick(x,size),kick(y,size),kick(z,size)
+        dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
+        idx += 1
+
+    # Box
+    dev.write(box + "\n")
+
+    # Close if we were writing to file
+    if filename:
+        dev.close()
+
 
 ######################################
 ## STAGE 1: READ ATOMISTIC TOPOLOGY ##
@@ -931,52 +959,16 @@ raw.extend(ions)
 
 # Write out
 
-if options["-o"]:
-    dev = open(options["-o"].value,"w")
-else:
-    dev = sys.stdout
-
 # Title
 if backmapping:
-    dev.write("Backmapped structure from MARTINI to %s\n"%options["-to"].value)
+    title = "Backmapped structure from MARTINI to %s\n"%options["-to"].value
 else:
-    dev.write("Mapped structure from %s to MARTINI\n"%options["-from"].value)
+    title = "Mapped structure from %s to MARTINI\n"%options["-from"].value
 
-# Atom count
-dev.write("%5d\n"%len(out))
-
-u = options["-kick"].value
-
-# Atoms
-idx = 1
-for atom in out:
-    # Regular atom
-    nam,res,id,chn,x,y,z = atom
-    if False and res not in solvent_stuff:
-        x,y,z = kick(x,u),kick(y,u),kick(z,u)
-    dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
-
-    idx += 1
-
-# Box
-dev.write(struc.groBoxString()+"\n")
-
-# Close if we were writing to file
-if options["-o"]:
-    dev.close()
-
-
-# Write the "raw" structure obtained by projection
-if options["-raw"]: 
-    dev = open(options["-raw"].value,"w")
-    dev.write("Projected structure before modifications\n")
-    dev.write("%5d\n"%len(raw))
-    idx = 1
-    for nam,res,id,chn,x,y,z in raw:
-        dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
-    idx += 1
-    dev.write(struc.groBoxString()+"\n")
-
+write_gro(options["-o"].value, title, out, struc.groBoxString(), options["-kick"].value)
+if options["-raw"]:
+    write_gro(options["-raw"].value, "Projected structure before modifications\n",
+              raw, struc.groBoxString(), 0)
 
 ## Write the output topology
 if options["-p"] and options["-po"]:
