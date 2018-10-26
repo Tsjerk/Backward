@@ -119,6 +119,64 @@ def kick(x,u):
     return x+(random.random()-0.5)*u
 
 
+def write_topology(filename, top, solvent, ions):
+    """Write the topology with solvent/ions put at the end"""
+    with open(filename, "w") as po:
+        mol = False
+
+        # Write everything up to the [ molecules ] directive
+        # After that, write only lines which are not solvent or ions
+        for i in open(top):
+            s = i.strip()
+            if "molecules" in i:
+                # Make sure we are not dealing with a comment
+                if s.startswith('[') and s[1:].strip().startswith("molecules"):
+                    mol = True
+        
+            if mol:
+                # Skip empty lines and comments
+                # Skip the lines listing solvent and ion molecules
+                if (not s) or (s[0] != ";" and i.split()[0] in solvent_stuff):
+                    continue
+        
+            po.write(i)
+    
+        # Add lines for solvent and ions
+        sol  = [(i[1],i[2]) for i in solvent]
+        sol  = [a[0] for a,b in itertools.groupby(sol)]
+        po.writelines(["%s %5d\n"%(a,len(list(b))) for a,b in itertools.groupby(sol)])
+
+        ions = [(i[0],i[2]) for i in ions]
+        ions = [a[0] for a,b in itertools.groupby(ions)]
+        po.writelines(["%s %5d\n"%(a.replace("+","").replace("-",""),len(list(b))) 
+                       for a,b in itertools.groupby(ions)])
+
+    return
+
+
+def write_ndx(filename, atoms, protein, solvent):
+    # Index groups
+    ndx_protein  = []
+    ndx_membrane = []
+    ndx_solvent  = []
+
+    for i,j in zip(range(1,1+len(atoms)),atoms):
+        if j[1] in protein:
+            ndx_protein.append(i)
+        elif j[1] in solvent:
+            ndx_solvent.append(i)
+        else:
+            ndx_membrane.append(i)
+
+    with open(filename, "w") as ndx:
+        ndx.write("[ Protein ]\n"+"\n".join([str(i) for i in ndx_protein])+"\n")
+        ndx.write("[ Membrane ]\n"+"\n".join([str(i) for i in ndx_membrane])+"\n")
+        ndx.write("[ Solvent ]\n"+"\n".join([str(i) for i in ndx_solvent])+"\n")
+    
+    return
+
+
+
 ######################################
 ## STAGE 1: READ ATOMISTIC TOPOLOGY ##
 ######################################
@@ -922,57 +980,9 @@ if options["-raw"]:
 
 ## Write the output topology
 if options["-p"] and options["-po"]:
-
-    po  = open(options["-po"].value,"w")
-    mol = False
-
-    # Write everything up to the [ molecules ] directive
-    # After that, write only lines which are not solvent or ions
-    for i in open(options["-p"].value):
-        s = i.strip()
-        if "molecules" in i:
-            # Make sure we are not dealing with a comment
-            if s.startswith('[') and s[1:].strip().startswith("molecules"):
-                mol = True
-        # Skip empty lines and comments
-        
-        # Now skip the lines listing solvent and ion molecules
-        if mol:
-            if not s:
-                continue
-            if s[0] != ";" and i.split()[0] in solvent_stuff:
-                continue
-        
-        po.write(i)
-    
-    # Add lines for solvent and ions
-    sol  = [(i[1],i[2]) for i in sol]
-    sol  = [a[0] for a,b in itertools.groupby(sol)]
-    po.writelines(["%s %5d\n"%(a,len(list(b))) for a,b in itertools.groupby(sol)])
-
-    ions = [(i[0],i[2]) for i in ions]
-    ions = [a[0] for a,b in itertools.groupby(ions)]
-    po.writelines(["%s %5d\n"%(a.replace("+","").replace("-",""),len(list(b))) 
-                   for a,b in itertools.groupby(ions)])
+    write_topology(options["-po"].value, options["-p"].value, sol, ions)
    
 
 ## Write an index file
 if options["-n"]:
-    # Index groups
-    ndx_protein  = []
-    ndx_membrane = []
-    ndx_solvent  = []
-
-    for i,j in zip(range(1,1+len(out)),out):
-        if j[1] in protein_stuff:
-            ndx_protein.append(i)
-        elif j[1] in solvent_stuff:
-            ndx_solvent.append(i)
-        else:
-            ndx_membrane.append(i)
-
-    ndx = open(options["-n"].value,"w")
-    ndx.write("[ Protein ]\n"+"\n".join([str(i) for i in ndx_protein])+"\n")
-    ndx.write("[ Membrane ]\n"+"\n".join([str(i) for i in ndx_membrane])+"\n")
-    ndx.write("[ Solvent ]\n"+"\n".join([str(i) for i in ndx_solvent])+"\n")
-
+    write_ndx(options["-n"].value, out, protein_stuff, solvent_stuff)
