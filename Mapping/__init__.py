@@ -359,10 +359,10 @@ class ResidueMap:
 
             if not got:
                 print "Problem determining mapping coordinates for atom %s of residue %s."%(target[0],resn)
-                print "atomlist:\n", atomlist
-                print "want:\n", want
-                print "should be mapping from:\n", self.map[want]
-                print "have:\n", xyz.keys()            
+                print "Atomlist:\n", atomlist
+                print "Trying to determine coordinates for particle:\n", want
+                print "These coordinates should map from particles:\n", self.map[want]
+                print "At this step the following particles are available:\n", xyz.keys()            
                 print "Bailing out..."
                 print target
                 sys.exit(1)
