@@ -553,7 +553,6 @@ class Mapping(object):
                         if aa:
                             for ffi in ff:
                                 for m in mol:
-                                    mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
                                     try:
                                         mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
                                     except:
