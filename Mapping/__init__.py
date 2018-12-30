@@ -351,14 +351,18 @@ class ResidueMap:
             # If we have a target list, the atom will be in
             # (it would have been skipped otherwise), and we
             # can read up to the next we want. 
-            #got = xyz.get(want, _average([ have.get(i) for i in self.map[want] ]))                
-            got = _average([ have.get(i) for i in self.map[want] ])                
+            #got = xyz.get(want, _average([ have.get(i) for i in self.map[want] ]))
+            if coords and want in coords.keys():
+                got = coords[want]
+            else:
+                got = _average([ have.get(i) for i in self.map[want] ])                
 
             if not got:
                 print "Problem determining mapping coordinates for atom %s of residue %s."%(target[0],resn)
-                print "atomlist:", atomlist
-                print "want:", want, self.map[want]
-                print "have:", xyz.keys()            
+                print "Atomlist:\n", atomlist
+                print "Trying to determine coordinates for particle:\n", want
+                print "These coordinates should map from particles:\n", self.map[want]
+                print "At this step the following particles are available:\n", xyz.keys()            
                 print "Bailing out..."
                 print target
                 sys.exit(1)
@@ -467,7 +471,7 @@ class ResidueMap:
 
         # Treat special cases: coordinate modifying operations
         for tag,i in self.mod:            
-            print tag, i
+            #print tag, i
             coord[i[0]] = _do[tag](i[0],i[1:],coord)
             if not coord[i[0]] and i[0] in atomlist:
                 print "Not all positions defined for [%s] in residue %s:" % (tag,resn),
@@ -549,7 +553,6 @@ class Mapping(object):
                         if aa:
                             for ffi in ff:
                                 for m in mol:
-                                    mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
                                     try:
                                         mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
                                     except:

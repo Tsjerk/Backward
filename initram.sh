@@ -44,10 +44,10 @@ The default protocol consists of the following steps:
 2. Energy minimization (500 steps), excluding non-bonded interactions 
    between atoms in selected groups, e.g. membrane and protein.
 3. Energy minimization (500 steps)
-4. Position restrained NVT simulation (300K), with time step 0.2 fs
-5. Position restrained NVT simulation (300K), with time step 0.5 fs
-6. Position restrained NVT simulation (300K), with time step 1.0 fs
-7. Position restrained NVT simulation (300K), with time step 2.0 fs
+4. Position restrained NVT simulation (200K), with time step 0.2 fs
+5. Position restrained NVT simulation (200K), with time step 0.5 fs
+6. Position restrained NVT simulation (200K), with time step 1.0 fs
+7. Position restrained NVT simulation (200K), with time step 2.0 fs
 
 These steps can be modified using the options, as listed below. 
 
