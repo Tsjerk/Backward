@@ -253,7 +253,12 @@ fi
 
 
 # Gromacs version
-GMXVERSION=($($GROMPP -h 2>&1 | sed -n '/^.*VERSION/{s///p;q;}'))
+GMXVERSION=($($GROMPP -h 2>&1 | grep "GROMACS:" | awk '{ print $5 }'))
+size=${#GMXVERSION}
+# for versions < 5, we need another command to extract the GMX version from "$GROMPP -h"
+if [ $size -eq 0 ] ; then
+    GMXVERSION=($($GROMPP -h 2>&1 | sed -n '/^.*VERSION/{s///p;q;}'))
+fi
 ifs=$IFS
 IFS=.
 GMXVERSION=($GMXVERSION)

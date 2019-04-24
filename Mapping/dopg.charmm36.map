@@ -1,38 +1,29 @@
-; latest revision TAW 20190407
+; latest revision TAW 20190405
 [ molecule ]
-DOPC
+DOPG
 
 [ martini ]
-NC3 PO4 GL1 GL2 C1A D2A C3A C4A C1B D2B C3B C4B 
+GL0 PO4 GL1 GL2 C1A D2A C3A C4A C1B D2B C3B C4B 
 
 [ mapping ]
 charmm27 charmm36 slipids amber
 
 [ atoms ]
-; Terminal head group (choline)
-    1     N   NC3 
-    2   C12   NC3 NC3 NC3 PO4 
-    3   C13    
-    4   C14    
-    5   C15   
-    6  H12A   NC3 NC3 NC3 PO4
-    7  H12B   
-    8  H13A   NC3 
-    9  H13B    
-   10  H13C    
-   11  H14A    
-   12  H14B    
-   13  H14C    
-   14  H15A   
-   15  H15B   
-   16  H15C   
-   17   C11   NC3 PO4  
-   18  H11A   
-   19  H11B   
-; Phosphate group
+    1   C13   GL0
+    2  H13A   GL0
+    3  H13B   GL0
+    4   OC3   GL0
+    5   HO3   GL0
+    6   C12   GL0 GL0 GL0 PO4
+    7  H12A   GL0
+    8   OC2   GL0
+    9   HO2   GL0
+   17   C11   GL0 PO4
+   18  H11A   GL0 PO4
+   19  H11B   GL0 PO4
    20     P   PO4
-   21   O13   
-   22   O14   
+   21   O13   PO4
+   22   O14   PO4
    23   O12   PO4 PO4 PO4 NC3
    24   O11   PO4 PO4 GL1
    25    C1   GL1 GL1 PO4
@@ -211,15 +202,3 @@ C18X C317 C316 C315
 C18Y C317 C316 C315
 C18Z C317 C316 C315
 
-;;;making a choline group
-[out]
-C14 N C13 C12
-H14A N C13 C12
-H14B N C13 C12
-H14C N C13 C12
-
-[ chiral ]
-C15 N C12 C13 C14
-H15A N C12 C13 C14
-H15B N C12 C13 C14
-H15C N C12 C13 C14
