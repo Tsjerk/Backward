@@ -5,7 +5,7 @@
 
 ## Mapping from atomistic to coarse grained and vice versa
 
-version="150906.13_TAW"
+version="190507.10_TAW"
 authors=["Tsjerk A. Wassenaar"]
 
 ##
@@ -395,7 +395,12 @@ def groAtom(a):
     #012345678901234567890123456789012345678901234567890
     #    1PRN      N    1   4.168  11.132   5.291
     ## ===>   atom name,   res name,     res id, chain,       x,          y,          z       
-    return (str(a[10:15]), str(a[5:10]),   int(a[:5]), " ", float(a[20:28]),float(a[28:36]),float(a[36:44]))
+    prec = len(a[20:].split('.', 2)[1]) + 1
+    x = 20 + prec
+    y = x + prec
+    z = y + prec
+    return (str(a[10:15]), str(a[5:10]),   int(a[:5]), " ", float(a[20:x]),float(a[x:y]),float(a[y:z]))
+
 
 def get_calpha_xyz(r):
     for i in r:
@@ -948,7 +953,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
     if not resn in mapping.keys():
         # If the residue is still not in the mapping list
         # then there is no other choice that to bail out
-        raise ValueError("Unknown residue: %s\n"%resn)
+        raise ValueError("Residue not found in mapping dictionary: %s\n"%resn)
         
  
     o, r = mapping[resn].do(residue,target,bb,nterm,cterm,options["-nt"])
