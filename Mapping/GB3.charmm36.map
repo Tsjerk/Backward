@@ -1,0 +1,90 @@
+[ molecule ]
+GB3 Gb3
+
+[ martini ]
+GM1 GM2 GM3 GM4 GM5 GM6 GM7 GM8 GM9 AM1 AM2 T1A C2A C3A C1B C2B D3B C4B C5B
+
+[ mapping ]
+charmm charmm36
+
+[ atoms ]
+; This is a very rudimentary forward mapping
+     1	O1  GM9
+     2	C1  GM9 
+     3	C2  GM8
+     4	O2  GM8
+     5	C3  GM7
+     6	C4  GM7
+     7	C5  GM9
+     8	C6  GM8
+     9	O3  GM8
+    10	O4  GM9
+    11	O5  GM7
+    12	O6  GM7
+    13	C7  GM6
+    14	C8  GM5
+    15	O7  GM5
+    16	C9  GM4
+    17	C10 GM4
+    18	C11 GM6
+    19	C12 GM5
+    20	O8  GM5
+    21	O9  GM6
+    22	O10 GM4
+    23	O11 GM3
+    24	C13 GM3
+    25	C14 GM2
+    26	O12 GM2
+    27	C15 GM1
+    28	C16 GM1
+    29	C17 GM3
+    30	C18 GM2
+    31	O13 GM2
+    32	O14 GM3
+    33	O15 GM1
+    34	O16 GM1
+    35	C19 AM2
+    36	C20 AM2
+    37	C21 AM1
+    38	O17 AM1
+    39	C22 AM1
+    40	C23 AM1
+    41	NG  AM2
+    42	C24 AM2
+    43	O18 AM2
+    44	C25 C1B
+    45	C26 C1B
+    46	C27 C1B
+    47	C28 C1B
+    48	C29 C2B
+    49	C30 C2B
+    50	C31 C2B
+    51	C32 C2B
+    52	C33 D3B
+    53	C34 D3B
+    54	C35 D3B
+    55	C36 D3B
+    56	C37 C4B
+    57	C38 C4B
+    58	C39 C4B
+    59	C40 C4B
+    60	C41 C4B C5B
+    61	C42 C5B
+    62	C43 C5B
+    63	C44 C5B
+    64	C45 C5B
+    65	C46 T1A
+    66	C47 T1A
+    67	C48 T1A
+    68	C49 T1A
+    69	C50 C2A
+    70	C51 C2A
+    71	C52 C2A
+    72	C53 C2A
+    73	C54 C2A
+    74	C55 C2A C3A
+    75	C56 C3A
+    76	C57 C3A
+    77	C58 C3A
+
+
