@@ -97,6 +97,7 @@ def _trans(a,s,coord):
         # Get the new position
         return b[0]-_normfac*u[0], b[1]-_normfac*u[1], b[2]-_normfac*u[2]
 
+
 def _cis(a,s,coord):
     #
     #    b--c
@@ -326,7 +327,10 @@ class ResidueMap:
 
         # Update the 'have' list according to the pre-mods
         for tag, i in self.pre:
-            xyz[i[0]] = _do[tag](i[0],i[1:],xyz) or xyz.get(i[0])
+            try:
+                xyz[i[0]] = _do[tag](i[0],i[1:],xyz) or xyz.get(i[0])
+            except ZeroDivisionError as err:
+                print("Failed [{}] operation:".format(tag), i[0], i[1:])
             #if not have[i[0]]:
             #    print("Not all positions defined for preassigning [%s] in residue %s:" % (tag,resn))
             #    print([(j,have.get(j)) for j in i])
