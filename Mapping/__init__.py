@@ -66,9 +66,9 @@ def _r(a,kick):
 
 def _assign(a,s,coord):
     # Get coordinates
-    s = [ coord.get(j,-1) for j in s ]
+    s = [ coord.get(j) for j in s ]
 
-    if min(s) > -1:
+    if not None in s:
         return tuple([sum(i)/len(s) for i in zip(*s)])
     else:
         return None
@@ -85,12 +85,12 @@ def _trans(a,s,coord):
     # a = b + c - d
 
     # Get coordinates for the other atoms
-    s = [ coord.get(j,-1) for j in s ]
+    s = [ coord.get(j) for j in s ]
 
     # Connecting particle
     b = s.pop(0)
 
-    if min(s) > -1:
+    if not None in s:
         # Subtract the third position from the fourth and so on, and sum the vectors
         u = _normalize([sum(k) for k in zip(*[ _normalize(_vsub(j,s[0])) for j in s[1:] ])])
         
@@ -111,7 +111,7 @@ def _cis(a,s,coord):
     try:                
         b,c,d = s
     except ValueError:
-        print "Invalid trans bond definition in residue %s (%s). Ignoring."%(out[0][1],i)
+        print("Invalid trans bond definition in residue %s (%s). Ignoring."%(out[0][1],i))
         return
 
     # Source coordinates
@@ -146,9 +146,9 @@ def _out(a,s,coord):
     # But the length can be variable
     
     # Get coordinates for the other atoms
-    s = [ coord.get(j,-1) for j in s ]
+    s = [ coord.get(j) for j in s ]
 
-    if min(s) > -1:
+    if not None in s:
         # Subtract the center from the other atoms and sum the vectors
         u = _normalize([sum(k) for k in zip(*[ _normalize(_vsub(j,s[0])) for j in s[1:] ])])
         
@@ -162,9 +162,9 @@ def _chiral(a,s,coord):
     # The 'chiral' definition is a list of atom names
     
     # Get coordinates for the other atoms; the first atom in this list is the chiral center
-    s = [ coord.get(j,-1) for j in s ]
+    s = [ coord.get(j) for j in s ]
 
-    if min(s) > -1:
+    if not None in s:
         # Subtract the center from the other atoms
         u = [ _vsub(j,s[0]) for j in s[1:] ]
 
@@ -209,7 +209,7 @@ def _chiral(a,s,coord):
                 w   = [ _normfac*j for j in _normalize(_crossprod(q,p)) ]
             except ZeroDivisionError:
                 trm = nterm and ", N-terminus" or (cterm and ", C-terminus" or "")
-                print "Chirality of %s (%s%s) for placing %s undefined by atoms %s. Skipping modification."%(i[1],resn,trm,i[0],repr(i[2:]))
+                print("Chirality of %s (%s%s) for placing %s undefined by atoms %s. Skipping modification."%(i[1],resn,trm,i[0],repr(i[2:])))
                 return None
     
             # The coordinates
@@ -328,8 +328,8 @@ class ResidueMap:
         for tag, i in self.pre:
             xyz[i[0]] = _do[tag](i[0],i[1:],xyz) or xyz.get(i[0])
             #if not have[i[0]]:
-            #    print "Not all positions defined for preassigning [%s] in residue %s:" % (tag,resn),
-            #    print [(j,have.get(j)) for j in i]
+            #    print("Not all positions defined for preassigning [%s] in residue %s:" % (tag,resn))
+            #    print([(j,have.get(j)) for j in i])
         for i,(p,q,r) in xyz.items():
             if not i in have:
                 have[i] = ('*',None,None,None,p,q,r)
@@ -358,13 +358,13 @@ class ResidueMap:
                 got = _average([ have.get(i) for i in self.map[want] ])                
 
             if not got:
-                print "Problem determining mapping coordinates for atom %s of residue %s."%(target[0],resn)
-                print "Atomlist:\n", atomlist
-                print "Trying to determine coordinates for particle:\n", want
-                print "These coordinates should map from particles:\n", self.map[want]
-                print "At this step the following particles are available:\n", xyz.keys()            
-                print "Bailing out..."
-                print target
+                print("Problem determining mapping coordinates for atom %s of residue %s."%(target[0],resn))
+                print("atomlist:\n", atomlist)
+                print("want:\n", want)
+                print("should be mapping from:\n", self.map[want])
+                print("have:\n", xyz.keys())
+                print("Bailing out...")
+                print(target)
                 sys.exit(1)
 
             # This logic reads the atom we want together with all atoms 
@@ -474,8 +474,8 @@ class ResidueMap:
             #print tag, i
             coord[i[0]] = _do[tag](i[0],i[1:],coord)
             if not coord[i[0]] and i[0] in atomlist:
-                print "Not all positions defined for [%s] in residue %s:" % (tag,resn),
-                print i[0], i[1:], coord.keys()
+                print("Not all positions defined for [%s] in residue %s:" % (tag,resn))
+                print(i[0], i[1:], coord.keys())
 
             # Index of target atom, if in the list
             t = atoms.get(i[0])
@@ -556,11 +556,11 @@ class Mapping(object):
                                     try:
                                         mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
                                     except:
-                                        print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
+                                        print("Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename))
                                     try:
                                         mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,pre=pre,name=m)
                                     except:
-                                        print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                                        print("Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename))
                             
                         # Reset lists
                         aa,ff,mod = [],[],[]
@@ -608,11 +608,11 @@ class Mapping(object):
                     try:
                         mapping[(m,  ffi,  cg_ff )] = ResidueMap(target=cg,atoms=aa,name=m)
                     except:
-                        print "Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename)
+                        print("Error reading %s to %s mapping for %s (file: %s)."%(ffi,cg_ff,m,filename))
                     try:
                         mapping[(m, cg_ff,  ffi  )] = ResidueMap(atoms=aa,mod=mod,name=m)
                     except:
-                        print "Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename)
+                        print("Error reading %s to %s mapping for %s (file: %s)."%(cg_ff,ffi,m,filename))
 
         self.mapping = mapping
 
@@ -620,7 +620,7 @@ class Mapping(object):
     def get(self, target="gromos",source="martini"): 
         mapping = self.mapping
         D = dict([(i[0],mapping[i]) for i in mapping.keys() if i[1] == source and i[2] == target])
-        print "Residues defined for transformation from %s to %s:"%(source,target)
-        print D.keys()
+        print("Residues defined for transformation from %s to %s:"%(source,target))
+        print(D.keys())
         return D
 

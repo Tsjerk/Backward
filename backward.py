@@ -1,8 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
+
+#from __future__ import print_function
 
 ## Mapping from atomistic to coarse grained and vice versa
 
-version="150906.13_TAW"
+version="190507.10_TAW"
 authors=["Tsjerk A. Wassenaar"]
 
 ##
@@ -117,6 +120,92 @@ mapnum = {"SOL": 1, "W": 4, "PW": 4, "ION": 5, "CL": 5, "CL-": 5, "NA": 5, "NA+"
 
 def kick(x,u):
     return x+(random.random()-0.5)*u
+
+
+def write_topology(filename, top, solvent, ions):
+    """Write the topology with solvent/ions put at the end"""
+    with open(filename, "w") as po:
+        mol = False
+
+        # Write everything up to the [ molecules ] directive
+        # After that, write only lines which are not solvent or ions
+        for i in open(top):
+            s = i.strip()
+            if "molecules" in i:
+                # Make sure we are not dealing with a comment
+                if s.startswith('[') and s[1:].strip().startswith("molecules"):
+                    mol = True
+        
+            if mol:
+                # Skip empty lines and comments
+                # Skip the lines listing solvent and ion molecules
+                if (not s) or (s[0] != ";" and i.split()[0] in solvent_stuff):
+                    continue
+        
+            po.write(i)
+    
+        # Add lines for solvent and ions
+        sol  = [(i[1],i[2]) for i in solvent]
+        sol  = [a[0] for a,b in itertools.groupby(sol)]
+        po.writelines(["%s %5d\n"%(a,len(list(b))) for a,b in itertools.groupby(sol)])
+
+        ions = [(i[0],i[2]) for i in ions]
+        ions = [a[0] for a,b in itertools.groupby(ions)]
+        po.writelines(["%s %5d\n"%(a.replace("+","").replace("-",""),len(list(b))) 
+                       for a,b in itertools.groupby(ions)])
+
+    return
+
+
+def write_ndx(filename, atoms, protein, solvent):
+    # Index groups
+    ndx_protein  = []
+    ndx_membrane = []
+    ndx_solvent  = []
+
+    for i,j in zip(range(1,1+len(atoms)),atoms):
+        if j[1] in protein:
+            ndx_protein.append(i)
+        elif j[1] in solvent:
+            ndx_solvent.append(i)
+        else:
+            ndx_membrane.append(i)
+
+    with open(filename, "w") as ndx:
+        ndx.write("[ Protein ]\n"+"\n".join([str(i) for i in ndx_protein])+"\n")
+        ndx.write("[ Membrane ]\n"+"\n".join([str(i) for i in ndx_membrane])+"\n")
+        ndx.write("[ Solvent ]\n"+"\n".join([str(i) for i in ndx_solvent])+"\n")
+    
+    return
+
+
+def write_gro(filename, title, atoms, box, size):
+    if filename:
+        dev = open(filename,"w")
+    else:
+        dev = sys.stdout
+    dev.write(title)
+
+    # Atom count
+    dev.write("%5d\n"%len(atoms))
+
+
+    # Atoms
+    idx = 1
+    for atom in atoms:
+        # Regular atom
+        nam,res,id,chn,x,y,z = atom
+        if False and res not in solvent_stuff:
+            x,y,z = kick(x,size),kick(y,size),kick(z,size)
+        dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
+        idx += 1
+
+    # Box
+    dev.write(box + "\n")
+
+    # Close if we were writing to file
+    if filename:
+        dev.close()
 
 
 ######################################
@@ -306,7 +395,12 @@ def groAtom(a):
     #012345678901234567890123456789012345678901234567890
     #    1PRN      N    1   4.168  11.132   5.291
     ## ===>   atom name,   res name,     res id, chain,       x,          y,          z       
-    return (str(a[10:15]), str(a[5:10]),   int(a[:5]), " ", float(a[20:28]),float(a[28:36]),float(a[36:44]))
+    prec = len(a[20:].split('.', 2)[1]) + 1
+    x = 20 + prec
+    y = x + prec
+    z = y + prec
+    return (str(a[10:15]), str(a[5:10]),   int(a[:5]), " ", float(a[20:x]),float(a[x:y]),float(a[y:z]))
+
 
 def get_calpha_xyz(r):
     for i in r:
@@ -362,12 +456,12 @@ class Structure:
         # coordinates and add to the coordinates of the first atom.
         A, B = None, None
         if self.box and not options["-nopbc"]:
-            A = zip(*self.box)
+            A = list(zip(*self.box))
             try:
                 B = m_inv(A)            
                 self.residues = [ unbreak(i,A,B) for i in self.residues ]
             except ZeroDivisionError:
-                print "Non-invertable box. Not able to unbreak molecules..."
+                print("Non-invertable box. Not able to unbreak molecules...")
 
 
         # Check for protein chains and breaks
@@ -584,6 +678,10 @@ class Option:
         if self.func == bool:
             return self.value != None
         return bool(self.value)
+    def __bool__(self):
+        if self.func == bool:
+            return self.value != None
+        return bool(self.value)
     def __str__(self):
         return self.value and str(self.value) or ""
     def setvalue(self,v):
@@ -623,11 +721,11 @@ options = [
 # Parsing arguments
 args = sys.argv[1:]
 if '-h' in args or '--help' in args:
-    print "\n",__file__
-    print desc or "\nSomeone ought to write a description for this script...\n"
+    print("\n",__file__)
+    print(desc or "\nSomeone ought to write a description for this script...\n")
     for thing in options:
-        print type(thing) != str and "%10s  %s"%(thing[0],thing[1].description) or thing
-    print
+        print(type(thing) != str and "%10s  %s"%(thing[0],thing[1].description) or thing)
+    print()
     sys.exit()
 
 
@@ -688,6 +786,7 @@ reslist     = mapping.keys()
 topresidues = None
 if top:
     topresidues = [i for i in top.residues]
+    print(options["-atomlist"], options["-atomlist"].value)
     if options["-atomlist"]:
         atm    = open(options["-atomlist"].value,"w")
         topatm = [j for i in topresidues for j in i]
@@ -805,10 +904,10 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
         topres = [i for j in range(mapnum.get(resn,1)) for i in topres]
         # Set the residue name to the moleculetype name
         topres[0][3] = topres[0][7]
-        target = zip(*topres)[0]
+        target = list(zip(*topres))[0]
         # Check for duplicate atom names
         if not len(target) == len(set(target)):
-            print "The target list for residue %s contains duplicate names. Relying on mapping file."%resn
+            print("The target list for residue %s contains duplicate names. Relying on mapping file."%resn)
             target = None
     else:
         target = None
@@ -833,7 +932,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
                 if p == set([k for j in mapping[i].map.values() for k in j]):
                     msg="Residue %s not found. Seems to match %s."%(resn,i)
                     if not msg in msgs:
-                        print msg
+                        print(msg)
                         msgs.append(msg)
                     resn = i
                     break
@@ -845,7 +944,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
                     if p.issubset(set([k for j in keys for k in j])):
                         msg="Residue %s not found. Seems to match %s."%(resn,i)
                         if not msg in msgs:
-                            print msg
+                            print(msg)
                             msgs.append(msg)
                         resn = i
                         break
@@ -854,7 +953,7 @@ for residue,bb,nterm,cterm in zip(struc.residues,struc.backbone,struc.nterm,stru
     if not resn in mapping.keys():
         # If the residue is still not in the mapping list
         # then there is no other choice that to bail out
-        raise ValueError, "Unknown residue: %s\n"%resn
+        raise ValueError("Residue not found in mapping dictionary: %s\n"%resn)
         
  
     o, r = mapping[resn].do(residue,target,bb,nterm,cterm,options["-nt"])
@@ -873,106 +972,22 @@ raw.extend(ions)
 
 # Write out
 
-if options["-o"]:
-    dev = open(options["-o"].value,"w")
-else:
-    dev = sys.stdout
-
 # Title
 if backmapping:
-    dev.write("Backmapped structure from MARTINI to %s\n"%options["-to"].value)
+    title = "Backmapped structure from MARTINI to %s\n"%options["-to"].value
 else:
-    dev.write("Mapped structure from %s to MARTINI\n"%options["-from"].value)
+    title = "Mapped structure from %s to MARTINI\n"%options["-from"].value
 
-# Atom count
-dev.write("%5d\n"%len(out))
-
-u = options["-kick"].value
-
-# Atoms
-idx = 1
-for atom in out:
-    # Regular atom
-    nam,res,id,chn,x,y,z = atom
-    if False and res not in solvent_stuff:
-        x,y,z = kick(x,u),kick(y,u),kick(z,u)
-    dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
-
-    idx += 1
-
-# Box
-dev.write(struc.groBoxString()+"\n")
-
-# Close if we were writing to file
-if options["-o"]:
-    dev.close()
-
-
-# Write the "raw" structure obtained by projection
-if options["-raw"]: 
-    dev = open(options["-raw"].value,"w")
-    dev.write("Projected structure before modifications\n")
-    dev.write("%5d\n"%len(raw))
-    idx = 1
-    for nam,res,id,chn,x,y,z in raw:
-        dev.write("%5d%-5s%5s%5d%8.3f%8.3f%8.3f\n"%(id%1e5,res,nam,idx%1e5,x,y,z))
-    idx += 1
-    dev.write(struc.groBoxString()+"\n")
-
+write_gro(options["-o"].value, title, out, struc.groBoxString(), options["-kick"].value)
+if options["-raw"]:
+    write_gro(options["-raw"].value, "Projected structure before modifications\n",
+              raw, struc.groBoxString(), 0)
 
 ## Write the output topology
 if options["-p"] and options["-po"]:
-
-    po  = open(options["-po"].value,"w")
-    mol = False
-
-    # Write everything up to the [ molecules ] directive
-    # After that, write only lines which are not solvent or ions
-    for i in open(options["-p"].value):
-        s = i.strip()
-        if "molecules" in i:
-            # Make sure we are not dealing with a comment
-            if s.startswith('[') and s[1:].strip().startswith("molecules"):
-                mol = True
-        # Skip empty lines and comments
-        
-        # Now skip the lines listing solvent and ion molecules
-        if mol:
-            if not s:
-                continue
-            if s[0] != ";" and i.split()[0] in solvent_stuff:
-                continue
-        
-        po.write(i)
-    
-    # Add lines for solvent and ions
-    sol  = [(i[1],i[2]) for i in sol]
-    sol  = [a[0] for a,b in itertools.groupby(sol)]
-    po.writelines(["%s %5d\n"%(a,len(list(b))) for a,b in itertools.groupby(sol)])
-
-    ions = [(i[0],i[2]) for i in ions]
-    ions = [a[0] for a,b in itertools.groupby(ions)]
-    po.writelines(["%s %5d\n"%(a.replace("+","").replace("-",""),len(list(b))) 
-                   for a,b in itertools.groupby(ions)])
+    write_topology(options["-po"].value, options["-p"].value, sol, ions)
    
 
 ## Write an index file
 if options["-n"]:
-    # Index groups
-    ndx_protein  = []
-    ndx_membrane = []
-    ndx_solvent  = []
-
-    for i,j in zip(range(1,1+len(out)),out):
-        if j[1] in protein_stuff:
-            ndx_protein.append(i)
-        elif j[1] in solvent_stuff:
-            ndx_solvent.append(i)
-        else:
-            ndx_membrane.append(i)
-
-    ndx = open(options["-n"].value,"w")
-    ndx.write("[ Protein ]\n"+"\n".join([str(i) for i in ndx_protein])+"\n")
-    ndx.write("[ Membrane ]\n"+"\n".join([str(i) for i in ndx_membrane])+"\n")
-    ndx.write("[ Solvent ]\n"+"\n".join([str(i) for i in ndx_solvent])+"\n")
-
+    write_ndx(options["-n"].value, out, protein_stuff, solvent_stuff)
