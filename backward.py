@@ -348,11 +348,11 @@ class Structure:
         A, B = None, None
         if self.box:
             A = zip(*self.box)
-	    try:
-                B = m_inv(A)            
-                self.residues = [ unbreak(i,A,B) for i in self.residues ]
-            except ZeroDivisionError:
-                print "Non-invertable box. Not able to unbreak molecules..."
+        try:
+            B = m_inv(A)
+            self.residues = [ unbreak(i,A,B) for i in self.residues ]
+        except ZeroDivisionError:
+            print "Non-invertable box. Not able to unbreak molecules..."
 
 
         # Check for protein chains and breaks
