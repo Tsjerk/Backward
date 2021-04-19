@@ -1,0 +1,144 @@
+[ molecule ]
+REYP
+
+[ martini ]
+S1 S2 S3 D4 D5 O6 C7 C8 C9 C10
+
+[ mapping ]
+charmm36
+
+[ atoms ]
+    1    C1  S1 S1 S3
+    2    C2  S1 S1 S2
+    3   H21
+    4   H22
+    5    C3  S2 S2 S1
+    6   H31
+    7   H32
+    8    C4  S2 S2 S3
+    9   H41
+   10   H42
+   11    C5  S3 S3 S2
+   12    C6  S3 S3 S1
+   13    C7  D4 D4 D4 S1 S1 S3
+   14   H71
+   15    C8  S3 D4
+   16   H81
+   17    C9  D4
+   18   C10  D4 D4 D4 D5
+   19  H101
+   20   C11  D4 D5
+   21  H111
+   22   C12  D5 D5 D5 D4
+   23  H121
+   24   C13  D5
+   25   C14  D5 D5 O6
+   26  H141
+   27   C15  O6 O6 D5
+   28  H151
+   29  H152
+; The methyl groups are constructed later
+   30   C16  
+   31  H161
+   32  H162
+   33  H163
+   34   C17
+   35  H171 
+   36  H172
+   37  H173
+   38   C18
+   39  H181
+   40  H182
+   41  H183
+   42   C19
+   43  H191
+   44  H192
+   45  H193
+   46   C20
+   47  H201
+   48  H202
+   49  H203
+; Ester group
+   50   O31  O6
+   51   C31  O6 O6 C7
+   52   O32 
+   53   C32  C7 C7 O6
+   54   H2X
+   55   H2Y
+; Palmitoyl tail
+   92   C33   C7
+   93   H3X   
+   94   H3Y   
+   95   C34   C7 C7 C8
+   96   H4X   
+   97   H4Y   
+   98   C35   C7 C8
+   99   H5X   
+  100   H5Y   
+  101   C36   C8 C8 C7
+  102   H6X   
+  103   H6Y   
+  104   C37   C8
+  105   H7X   
+  106   H7Y   
+  107   C38   C8 C8 C8 C9
+  108   H8X   
+  109   H8Y   
+  110   C39   C8 C8 C9
+  111   H9X   
+  112   H9Y   
+  113  C310   C9 C8 
+  114  H10X   
+  115  H10Y   
+  116  C311   C9 C9 C8
+  117  H11X   
+  118  H11Y   
+  119  C312   C9
+  120  H12X   
+  121  H12Y   
+  122  C313   C9 C9 10
+  123  H13X   
+  124  H13Y   
+  125  C314   C10 C9
+  126  H14X   
+  127  H14Y   
+  128  C315   C10 C10 C9
+  129  H15X   
+  130  H15Y   
+  131  C316   C10
+  132  H16X   
+  133  H16Y   
+  134  H16Z   
+
+[ chiral ]
+ C16 C1 C2 C6
+ H161 C1 C2 C6
+ H162 C1 C2 C6
+ H163 C1 C2 C6
+ C17 C1 C6 C2
+ H171 C1 C6 C2
+ H172 C1 C6 C2
+ H173 C1 C6 C2
+[ out ]
+ C18 C5 C4 C6
+ H181 C5 C4 C6 
+ H182 C5 C4 C6 
+ H183 C5 C4 C6 
+ C19 C9 C8 C10
+ H191 C9 C8 C10
+ H192 C9 C8 C10
+ H193 C9 C8 C10
+ C20 C13 C12 C14
+ H201 C13 C12 C14
+ H202 C13 C12 C14
+ H203 C13 C12 C14
+
+[ trans ]
+ C8 C7 C6 C1
+[ out ]
+ H81 C8 C6 C9
+ C10 C9 C19 C8
+ H101 C10 C9 C11
+[ trans ]
+ C12 C11 C10 C9
+ C20 C13 C12 C14

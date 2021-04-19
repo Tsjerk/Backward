@@ -1,0 +1,281 @@
+[ molecule ]
+TOG
+
+[ martini ]
+GLY ES1 ES2 ES3 C1A S2A C3A C4A C1B D2B C3B C4B C1C D2C C3C C4C
+
+[ mapping ]
+charmm charmm36
+
+[ atoms ]
+; Glycerol
+    1	C1    GLY GLY ES1
+    2	HA
+    3	HB
+    4	O11   ES1 ES1 GLY
+    5	O12   ES1
+    6	C11   ES1 
+    7	C12   ES1 C1A
+    8	H2P
+    9	H2Q   
+   10	C2    GLY
+   11	HS
+   12	O21   GLY ES2
+   13	C21   ES2
+   14	O22   ES2
+   15	C22   ES2 C2A
+   16	H2R
+   17	H2S
+   18	C3    GLY ES3 ES3
+   19	HX
+   20	HY
+   21	O31   ES3 ES3 GLY
+   22	C31   ES3
+   23	O32   ES3
+   24	C32   ES3 C3A
+   25	H2X
+   26	H2Y
+; First tail - copied from charmm POPC
+   45   C13   C1A
+   46   H3P   
+   47   H3Q   
+   48   C14   C1A C1A C1A D2A
+   49   H4P   
+   50   H4Q   
+   51   C15   C1A D2A
+   52   H5P   
+   53   H5Q   
+   54   C16   D2A D2A D2A C1A
+   55   H6P   
+   56   H6Q   
+   57   C17   D2A
+   58   H7P   
+   59   H7Q   
+   60   C18   D2A D2A D2A C3A
+   61   H8P   
+   62   H8Q   
+   63   C19   D2A D2A C3A
+   64   H9P   D2A C3A
+   65  C110   C3A C3A D2A
+   66  H10P   D2A C3A
+   67  C111   C3A C3A C3A D2A
+   68  H11P   
+   69  H11Q   
+   70  C112   C3A
+   71  H12P   
+   72  H12Q   
+   73  C113   C3A C3A C3A C4A
+   74  H13P   
+   75  H13Q   
+   76  C114   C3A C4A
+   77  H14P   
+   78  H14Q   
+   79  C115   C4A C4A C4A C3A
+   80  H15P   
+   81  H15Q   
+   82  C116   C4A
+   83  H16P   
+   84  H16Q   
+   85  C117   C4A
+   86  H17P   
+   87  H17Q   
+   88  C118   C4A
+   89  H18P   
+   90  H18Q   
+   91  H18O   
+; Second tail - copied from charmm POPC
+   45   C23   C1B
+   46   H3R   
+   47   H3S   
+   48   C24   C1B C1B C1B D2B
+   49   H4R   
+   50   H4S   
+   51   C25   C1B D2B
+   52   H5R   
+   53   H5S   
+   54   C26   D2B D2B D2B C1B
+   55   H6R   
+   56   H6S   
+   57   C27   D2B
+   58   H7R   
+   59   H7S   
+   60   C28   D2B D2B D2B C3B
+   61   H8R   
+   62   H8S   
+   63   C29   D2B D2B C3B
+   64   H9R   D2B C3B
+   65  C210   C3B C3B D2B
+   66  H10R   D2B C3B
+   67  C211   C3B C3B C3B D2B
+   68  H11R   
+   69  H11S   
+   70  C212   C3B
+   71  H12R   
+   72  H12S   
+   73  C213   C3B C3B C3B C4B
+   74  H13R   
+   75  H13S   
+   76  C214   C3B C4B
+   77  H14R   
+   78  H14S   
+   79  C215   C4B C4B C4B C3B
+   80  H15R   
+   81  H15S   
+   82  C216   C4B
+   83  H16R   
+   84  H16S   
+   85  C217   C4B
+   86  H17R   
+   87  H17S   
+   88  C218   C4B
+   89  H18R   
+   90  H18S   
+   91  H18T   
+; Third tail - copied from charmm POPC
+   45   C33   C1C
+   46   H3X   
+   47   H3Y   
+   48   C34   C1C C1C C1C D2C
+   49   H4X   
+   50   H4Y   
+   51   C35   C1C D2C
+   52   H5X   
+   53   H5Y   
+   54   C36   D2C D2C D2C C1C
+   55   H6X   
+   56   H6Y   
+   57   C37   D2C
+   58   H7X   
+   59   H7Y   
+   60   C38   D2C D2C D2C C3C
+   61   H8X   
+   62   H8Y   
+   63   C39   D2C D2C C3C
+   64   H9X   D2C C3C
+   65  C310   C3C C3C D2C
+   66  H10X   D2C C3C
+   67  C311   C3C C3C C3C D2C
+   68  H11X   
+   69  H11Y   
+   70  C312   C3C
+   71  H12X   
+   72  H12Y   
+   73  C313   C3C C3C C3C C4C
+   74  H13X   
+   75  H13Y   
+   76  C314   C3C C4C
+   77  H14X   
+   78  H14Y   
+   79  C315   C4C C4C C4C C3C
+   80  H15X   
+   81  H15Y   
+   82  C316   C4C
+   83  H16X   
+   84  H16Y   
+   85  C317   C4C
+   86  H17X   
+   87  H17Y   
+   88  C318   C4C
+   89  H18X   
+   90  H18Y   
+   91  H18Z   
+
+
+;making R stereoisomer- placing HS
+[chiral]
+HS C2 O21 C1 C3
+
+; acyl esters
+; These are not as tricky as the GROMOS ones: the dihedral potential takes care of reorientation
+[trans]
+C12 C11 O11 C1
+[ out ]
+O12 C11 O11 C12
+[trans]
+C22 C21 O21 C2
+[ out ]
+O22 C21 O21 C22
+[trans]
+C32 C31 O31 C3
+[out]
+O32 C31 O31 C32
+
+;cis bonds in lipid chains
+; tail 1
+[ out ]
+H7P C17 C16 C18
+H7Q C17 C16 C18
+C38 C17 C16 H7P
+H8P C17 C16 H7P
+H8Q C17 C16 H7P
+[ trans ]
+C19 C18 C17 C16
+C110 C19 C18 C17
+H10P C110 C19 C18
+[ out ]
+C111 C110 H10P C19
+H11P C110 H10P C19
+H11Q C110 H10P C19
+H9P C19 C110 C18
+; tail 2
+[ out ]
+H7R C27 C26 C28
+H7S C27 C26 C28
+C28 C27 C26 H7R
+H8R C27 C26 H7R
+H8S C27 C26 H7R
+[ trans ]
+C29 C28 C27 C26
+C210 C29 C28 C27
+H10R C210 C29 C28
+[ out ]
+C211 C210 H10R C29
+H11R C210 H10R C29
+H11S C210 H10R C29
+H9R C29 C210 C28
+; tail 3
+[ out ]
+H7X C37 C36 C38
+H7Y C37 C36 C38
+C38 C37 C36 H7X
+H8X C37 C36 H7X
+H8Y C37 C36 H7X
+[ trans ]
+C39 C38 C37 C36
+C310 C39 C38 C37
+H10X C310 C39 C38
+[ out ]
+C311 C310 H10X C39
+H11X C310 H10X C39
+H11Y C310 H10X C39
+H9X C39 C310 C38
+
+
+; extend the tails
+[ trans ]
+; tail 1
+C117 C116 C115 C114
+H17P C116 C115 C114
+H17Q C116 C115 C114
+C118 C117 C116 C115
+H18P C117 C116 C115
+H18Q C117 C116 C115
+H18O C117 C116 C115
+; tail 2
+C217 C216 C215 C214
+H17R C216 C215 C214
+H17S C216 C215 C214
+C218 C217 C216 C215
+H18R C217 C216 C215
+H18S C217 C216 C215
+H18T C217 C216 C215
+; tail 3
+C317 C316 C315 C314
+H17X C316 C315 C314
+H17Y C316 C315 C314
+C318 C317 C316 C315
+H18X C317 C316 C315
+H18Y C317 C316 C315
+H18Z C317 C316 C315
+
+
