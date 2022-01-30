@@ -104,6 +104,7 @@ MDSTEPS=500
 DT=0.0002,0.0005,0.001,0.002
 MDP=()
 POSRE=true
+SOFT=false
 
 # - em/md options
 
@@ -134,6 +135,7 @@ OPTIONS=$(cat << __OPTIONS__
     -nopr    Disable position restraints                                  *BOOL:  false
     -mdp     User provided MDP file for post-hoc simulations              *FILE:  None
              Multiple instances possible
+    -soft    Use soft-core potentials in the (2nd) energy minimization    *BOOL:  false
 __OPTIONS__
 )
 
@@ -191,6 +193,7 @@ while [ -n "$1" ]; do
        -dt)                    DT=$2      ; shift 2; continue ;; 
      -nopr)                 POSRE=false   ; shift  ; continue ;;
       -mdp)       MDP[${#MDP[@]}]=$2      ; shift 2; continue ;;
+     -soft)                  SOFT=true    ; shift  ; continue ;;
          *)       BAD_OPTION $1;;
   esac
 done
@@ -394,6 +397,26 @@ BASE=$i-EM
 # Turn all nonbonded interactions on and set the table_extension to default
 # Change the number of steps
 sed -e '/^nsteps/s/=.*$/='$NBSTEPS'/' -e '/^ *table-extension/s/^/;/' -e '/^ *energygrp_excl/s/^/;/' $mdp > $BASE.mdp
+
+# (Optionally) use soft-core potentials
+if [ $SOFT = true ] ; then
+   # Restore default cutoff if using soft-core potentials (domain decomposition problems with the "group" scheme)
+   sed -i '/cutoff_scheme/d'                     $BASE.mdp
+   echo "                                  "  >> $BASE.mdp
+   # Actual soft-core potentials part
+   echo "; Soft-core potentials            "  >> $BASE.mdp
+   echo "free-energy              = yes    "  >> $BASE.mdp
+   echo "couple-moltype           = system "  >> $BASE.mdp
+   echo "couple-lambda0           = vdw-q  "  >> $BASE.mdp
+   echo "couple-intramol          = no     "  >> $BASE.mdp
+   echo "init-lambda-state        = 0      "  >> $BASE.mdp
+   echo "vdw-lambdas              = 0.0    "  >> $BASE.mdp
+   echo "sc-alpha                 = 0.5    "  >> $BASE.mdp
+   echo "sc-power                 = 1      "  >> $BASE.mdp
+   echo "sc-r-power               = 6      "  >> $BASE.mdp
+   echo "sc-sigma                 = 0.3    "  >> $BASE.mdp 
+fi
+
 mdp=$BASE.mdp
 
 # Set up for running
