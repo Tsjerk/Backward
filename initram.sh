@@ -271,7 +271,7 @@ if [[ $GMXVERSION -lt 5 ]]
 then
     CUTOFFSCHEME=""
 else
-    CUTOFFSCHEME="cutoff_scheme = group"
+    CUTOFFSCHEME="cutoff_scheme = verlet"
 fi
 
 
@@ -348,11 +348,6 @@ $CUTOFFSCHEME
 
 ; Table extension is needed initially 
 table-extension=2
-
-; During first steps nonbonded interactions
-; are excluded within groups membrane and protein
-energygrps=Protein Membrane Solvent
-energygrp_excl=Protein Protein Membrane Membrane
 
 ; Usually no trajectory is written, 
 ; but this can be changed (-trj)
